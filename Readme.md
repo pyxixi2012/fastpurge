@@ -8,7 +8,7 @@ Usage
 -----
 
 ```
-fastpurge [-x] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
+fastpurge [-xnvh] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
   
   -x, --regex
     use regexes instead of plain keys       
