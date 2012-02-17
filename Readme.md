@@ -1,35 +1,88 @@
 fastpurge
 =========
 
-delete all varnish keys by regex(es)
+purge all keys matching by one or more regexes from redis, varnish or memcached.
+
+
+Syntax
+------
+```
+fastpurge [-x] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
+  
+  -x, --regex
+    use regexes instead of plain keys       
+
+  -n, --dry-run
+    print the matching keys, but do not delete    
+
+  -v, --version
+    print version and exit
+
+  -h, --help 
+    print this message and exit
+ 
+
+Adapters:
+
+  --redis HOST(:PORT) 
+    purge from redis HOST (multiple allowed)
+
+  --memcached HOST(:PORT) 
+    purge from memcached HOST (multiple allowed)
+
+  --varnish HOST(:PORT) 
+    purge from varnish HOST (multiple allowed)
+
+
+Redis options:
+
+  --hdel HASH
+    delete keys from hash HASH
+
+  --sdel SET
+    delete keys from set SET
+
+  --zdel SET
+    delete keys from sorted set SET
+
+  --rdb DB
+    use redis database number DB (default is zero)
 
 ```
-fastpurge --varnish -x "key([0-9]+)" "other_key([0-9]+)"
-```
 
-delete all varnish keys by key
 
-```
-fastpurge --varnish key1 key2 key3 key4 otherkey23
-```
 
-delete all redis keys by regex(es)
+Installation
+------------
 
 ```
-fastpurge --redis -x "key([0-9]+)" "other_key([0-9]+)"
+  git clone git@github.com:paulasmuth/fastpurge.git
+  make install
 ```
 
-delete all redis hash->keys by regex(es)
+
+
+Examples
+--------
+
+delete all redis keys matching one of the two regexes
 
 ```
-fastpurge --redis -x --hdel "foobar:myhash" "key([0-9]+)" "other_key([0-9]+)"
+fastpurge --redis 10.0.0.1:6379 -x "key([0-9]+)" "other_key([0-9]+)"
 ```
 
-delete all redis keys by key
+delete all keys from hash "foobar:myhash" matching two regexes
 
 ```
-fastpurge --redis key1 key2 key3 key4 otherkey23
+fastpurge --redis 10.0.0.1:6379  -x --hdel "foobar:myhash" "key([0-9]+)" "other_key([0-9]+)"
 ```
+
+delete three redis keys from multiple servers
+
+```
+fastpurge --redis 10.0.0.1:6379 --redis 10.0.0.2:6379 key1 key2 key3
+```
+
 
 
 License
