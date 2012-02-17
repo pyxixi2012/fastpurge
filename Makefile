@@ -2,7 +2,7 @@ CPPFLAGS ?= -Wall
 CXXFLAGS ?= -pipe -O2
 PREFIX   ?= usr/local
 
-fastpurge: fastpurge.c
+fastpurge: fastpurge.cpp
 
 %: %.c++
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
