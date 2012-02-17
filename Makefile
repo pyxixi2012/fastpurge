@@ -1,14 +1,14 @@
 CPPFLAGS ?= -Wall
-CFLAGS   ?= -pipe -O2
+CXXFLAGS ?= -pipe -O2
 PREFIX   ?= usr/local
 
 fastpurge: fastpurge.c
 
-%: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $^
+%: %.c++
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
-.c:
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+.c++:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $>
 
 bin    := $(DESTDIR)/$(PREFIX)/bin
 
