@@ -1,11 +1,12 @@
 fastpurge
 =========
 
-purge all keys matching by one or more regexes from redis, varnish or memcached.
+easily purge all keys matching one or more regexes from one or more redis, varnish or memcached instances
 
 
-Syntax
-------
+Usage
+-----
+
 ```
 fastpurge [-x] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
   
@@ -47,20 +48,16 @@ Redis options:
 
   --rdb DB
     use redis database number DB (default is zero)
-
 ```
-
 
 
 Installation
 ------------
 
 ```
-  git clone git@github.com:paulasmuth/fastpurge.git
-  make install
+git clone git@github.com:paulasmuth/fastpurge.git
+make install
 ```
-
-
 
 Examples
 --------
