@@ -73,21 +73,22 @@ int main(int argc, char* argv[]){
   printf("fnord!\n");
 
   /*
-    struct ev_loop* ev = ev_default_loop(0);
+    
     std::vector<std::string> patterns;
     std::list<Engine*> purgers;
 
     purgers.push_back(new VarnishPurger(ev, patterns));
     purgers.push_back(new RedisPurger(ev, patterns));
 
-    ev_loop(ev, 0);
+   
   */ 
-
-  ev::default_loop eventLoop;
+  
+  struct ev_loop* ev = ev_default_loop(0);
 
   /* TODO: Actually do something */
 
-  eventLoop.run();
+  ev_loop(ev, 0);
+  
 
   return EXIT_SUCCESS;
 }
