@@ -5,10 +5,10 @@ BaseAdapter::BaseAdapter(ev::loop_ref& loop_, const char* address_) : loop(loop_
   regcomp(&xp_addr, XP_ADDRESS, REG_EXTENDED);
 
   if(regexec(&xp_addr, address_, 0, NULL, 0) != 0){
-  	printf("invalid address: %s\n", address_);
-  	exit(1);
+    printf("invalid address: %s\n", address_);
+    exit(1);
   } else {
-  	this->address = address_;
+    this->address = address_;
   }
 }
   
