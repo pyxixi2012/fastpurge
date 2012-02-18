@@ -9,10 +9,10 @@ sources = src/fastpurge.cpp
 bin    := $(DESTDIR)/$(PREFIX)/bin
 
 fastpurge: $(objects) 
-	$(CXX) $(CPPFLAGS) -o $@ $(objects)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $(objects)
 
 $(objects): $(sources) 
-	$(CXX) $(CPPFLAGS) -c $(sources)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(sources)
 
 clean: 
 	rm -f $(objects) fastpurge
