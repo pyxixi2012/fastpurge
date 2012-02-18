@@ -8,7 +8,7 @@ Usage
 -----
 
 ```
-fastpurge [-xnvh] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
+fastpurge [-xnvhs] [--redis|--varnish|--memcached SERVER]... [OPTIONS]... [PATTERN]...
   
   -x, --regex
     use regexes instead of plain keys       
@@ -16,12 +16,15 @@ fastpurge [-xnvh] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
   -n, --dry-run
     print the matching keys, but do not delete    
 
+  -s, --silent
+    don't print the matching keys
+
   -v, --version
     print version and exit
 
   -h, --help 
     print this message and exit
- 
+
 
 Adapters:
 
