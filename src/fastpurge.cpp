@@ -7,6 +7,7 @@
 #include <ev++.h>
 
 #include "version.h"
+#include "adapter_config.h"
 #include "BaseAdapter.h"
 
 /*
@@ -42,6 +43,7 @@ static int use_regex;
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
   std::vector<BaseAdapter*> adapters;
+  adapter_config* adapter_configs;
   int c;
   
   while (1) {
@@ -113,3 +115,4 @@ int main(int argc, char* argv[]){
 
   return 0;
 }
+
