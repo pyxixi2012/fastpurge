@@ -24,5 +24,9 @@ int main(int argc, char* argv[]){
 
   ev::default_loop eventLoop;
 
+  /* TODO: Actually do something */
+
+  eventLoop.run();
+
   return EXIT_SUCCESS;
 }
