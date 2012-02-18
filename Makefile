@@ -3,7 +3,7 @@ PREFIX   ?= usr/local
 
 CPPFLAGS += -Iinclude
 
-objects = fastpurge.o
+objects = src/fastpurge.o
 sources = src/fastpurge.cpp
 
 bin    := $(DESTDIR)/$(PREFIX)/bin
@@ -11,8 +11,8 @@ bin    := $(DESTDIR)/$(PREFIX)/bin
 fastpurge: $(objects) 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $(objects)
 
-$(objects): $(sources) 
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(sources)
+.cpp.o:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 clean: 
 	rm -f $(objects) fastpurge
