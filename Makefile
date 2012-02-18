@@ -15,8 +15,14 @@ fastpurge: $(objects)
 .cpp.o:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
+.deps: $(sources)
+	$(CXX) $(CPPFLAGS) -M $< >$@
+
 clean: 
 	rm -f $(objects) fastpurge
+
+distclean: clean
+	rm -f .deps
 
 install: $(bin)/fastpurge
 
@@ -26,4 +32,10 @@ $(bin)/fastpurge: fastpurge $(bin)
 $(bin):
 	mkdir -p $@
 
-.PHONY: clean install
+.PHONY: clean distclean install
+
+ifneq ($(MAKECMDGLOBALS),clean)
+ifneq ($(MAKECMDGLOBALS),distclean)
+-include .deps
+endif
+endif
