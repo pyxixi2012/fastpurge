@@ -109,11 +109,11 @@ int main(int argc, char* argv[]){
 
   /* initialize all adapters from adapter_configs */
 
-  struct ev_loop* ev = ev_default_loop(0);
+  ev::default_loop eventLoop;
 
   /* TODO: Actually do something */
 
-  ev_loop(ev, 0);
+  eventLoop.run();
 
   return 0;
 }
