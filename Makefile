@@ -15,7 +15,7 @@ $(objects): $(sources)
 	$(CXX) $(CPPFLAGS) -c $(sources)
 
 clean: 
-	rm $(objects) fastpurge
+	rm -f $(objects) fastpurge
 
 install: $(bin)/fastpurge
 
