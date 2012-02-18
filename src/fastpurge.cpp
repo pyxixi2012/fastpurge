@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <getopt.h>
-#include <string.h>
+#include <cstring>
 #include <vector>
 #include <string>
 #include <cstdlib>
