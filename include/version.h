@@ -29,28 +29,28 @@
   "                                                                    \n" \
   "Adapters:                                                           \n" \
   "                                                                    \n" \
-  "  --redis HOST(:PORT)                                               \n" \
+  "  --redis=HOST(:PORT)                                               \n" \
   "    purge from redis HOST (multiple allowed)                        \n" \
   "                                                                    \n" \
-  "  --memcached HOST(:PORT)                                           \n" \
+  "  --memcached=HOST(:PORT)                                           \n" \
   "    purge from memcached HOST (multiple allowed)                    \n" \
   "                                                                    \n" \
-  "  --varnish HOST(:PORT)                                             \n" \
+  "  --varnish=HOST(:PORT)                                             \n" \
   "    purge from varnish HOST (multiple allowed)                      \n" \
   "                                                                    \n" \
   "                                                                    \n" \
   "Redis options:                                                      \n" \
   "                                                                    \n" \
-  "  --hdel HASH                                                       \n" \
+  "  --hdel=HASH                                                       \n" \
   "    delete keys from hash HASH                                      \n" \
   "                                                                    \n" \
-  "  --sdel SET                                                        \n" \
+  "  --sdel=SET                                                        \n" \
   "    delete keys from set SET                                        \n" \
   "                                                                    \n" \
-  "  --zdel SET                                                        \n" \
+  "  --zdel=SET                                                        \n" \
   "    delete keys from sorted set SET                                 \n" \
   "                                                                    \n" \
-  "  --rdb DB                                                          \n" \
+  "  --rdb=DB                                                          \n" \
   "    use redis database number DB (default is zero)                  \n" \
   "\n\n"
 
