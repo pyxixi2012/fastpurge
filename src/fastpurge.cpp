@@ -9,6 +9,7 @@
 #include "version.h"
 #include "adapter_config.h"
 #include "BaseAdapter.h"
+#include "RedisPurger.h"
 
 /*
   FIXPAUL: --dry-run is working, but -d is not
@@ -45,7 +46,7 @@ int main(int argc, char* argv[]){
   std::vector<BaseAdapter*> adapters;
   int c;
 
-  struct ev_loop* ev = ev_default_loop(0);
+  ev::default_loop eventLoop;
 
   while (1) {
     int option_index = 0;
@@ -69,7 +70,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        adapters.push_back(new BaseAdapter(ev, optarg));
+        /* Push redis adapter */
         break;
 
       case ADAPTER_MEMCACHED:
@@ -107,8 +108,6 @@ int main(int argc, char* argv[]){
     printf("  --help for more information\n");
     return 1;
   }
-
-  ev::default_loop eventLoop;
 
   /* TODO: Actually do something */
 
