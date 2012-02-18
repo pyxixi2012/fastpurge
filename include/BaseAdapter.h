@@ -3,12 +3,14 @@
 
 #include <string>
 #include <vector>
-
+#include <regex.h>
 #include <ev++.h>
 
 #define ADAPTER_REDIS 1
 #define ADAPTER_MEMCACHED 2
 #define ADAPTER_VARNISH 3
+
+#define XP_ADDRESS "([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})"
 
 class BaseAdapter {
 protected:
