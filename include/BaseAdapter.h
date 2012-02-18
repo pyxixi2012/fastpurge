@@ -18,6 +18,7 @@ protected:
   struct ev::loop_ref& loop;
   std::vector<std::string> patterns;
 
+  BaseAdapter() = delete;
   BaseAdapter(ev::loop_ref&);
 
 public:
