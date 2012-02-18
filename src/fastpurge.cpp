@@ -8,7 +8,7 @@
 
 #include "version.h"
 #include "adapter_config.h"
-#include "base_adapter.h"
+#include "BaseAdapter.h"
 
 /*
   FIXPAUL: --dry-run is working, but -d is not
