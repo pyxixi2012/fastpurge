@@ -4,7 +4,7 @@ PREFIX   ?= usr/local
 CPPFLAGS += -std=c++0x -Iinclude
 LDFLAGS  += -lev
 
-sources  := fastpurge.cpp base_adapter.cpp
+sources  := fastpurge.cpp BaseAdapter.cpp
 
 srcdir   := src/
 objdir   := obj/
