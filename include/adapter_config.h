@@ -5,6 +5,7 @@
 #define ADAPTER_MEMCACHED 2
 #define ADAPTER_VARNISH 3
 
+/*
 struct adapter_config {
   char adapter; 
   char address[4];
@@ -15,5 +16,6 @@ struct adapter_config {
   char* redis_zdel;
   int redis_rdb;
 };
+*/
 
 #endif

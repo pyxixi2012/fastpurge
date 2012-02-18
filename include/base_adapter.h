@@ -11,11 +11,11 @@
 class BaseAdapter {
 protected:
   struct ev_loop* ev;
-  std::vector<std::string> patterns;
-  adapter_config config;
+  char* address;
+  std::vector<std::string> patterns;  
 
 public:
-  BaseAdapter(struct ev_loop* ev_, const std::vector<std::string>& patterns_, adapter_config* config);
+  BaseAdapter(struct ev_loop* ev_, char* address_, const std::vector<std::string>& patterns_);
 
   /*virtual void purge(const char* keys) = 0;*/
 };

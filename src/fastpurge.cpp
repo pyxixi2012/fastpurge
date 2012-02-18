@@ -43,7 +43,6 @@ static int use_regex;
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
   std::vector<BaseAdapter*> adapters;
-  std::vector<adapter_config*> adapter_configs;
   int c;
   
   while (1) {
