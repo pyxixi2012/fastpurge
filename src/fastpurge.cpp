@@ -49,9 +49,9 @@ int main(int argc, char* argv[]){
     int option_index = 0;
     static struct option long_options[] =
     { 
-      {"redis",      1, no_argument, '1'},            
-      {"memcached",  1, no_argument, '2'},
-      {"varnish",    1, no_argument, '3'},
+      {"redis",      1, no_argument, ADAPTER_REDIS},            
+      {"memcached",  1, no_argument, ADAPTER_MEMCACHED},
+      {"varnish",    1, no_argument, ADAPTER_VARNISH},
       {"help",       0, no_argument, 'h'},
       {"version",    0, no_argument, 'v'},
       {"dry-run",    0, &dry_run,    'd'},
@@ -66,15 +66,15 @@ int main(int argc, char* argv[]){
      
     switch (c) {
 
-      case '1':
+      case ADAPTER_REDIS:
         /*add_adapter(&adapter_configs, ADAPTER_REDIS, optarg);*/        
         break;
 
-      case '2':
+      case ADAPTER_MEMCACHED:
         /*add_adapter(&adapter_configs, ADAPTER_MEMCACHED, optarg);*/        
         break;
 
-      case '3':
+      case ADAPTER_VARNISH:
         /*add_adapter(&adapter_configs, ADAPTER_VARNISH, optarg);*/
         break;
 
