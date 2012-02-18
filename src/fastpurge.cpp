@@ -2,6 +2,7 @@
 #include<vector>
 #include<string>
 
+#include "version.h"
 #include "BaseAdapter.h"
 
 int main(int argc, char* argv[]){

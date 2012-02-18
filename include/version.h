@@ -6,12 +6,50 @@
 #define VERSION_MICRO 1
 
 #define VERSION_STRING "fastpurge %i.%i.%i\n" \
- "\n" \
- "Copyright © 2012\n" \
- "  Paul Asmuth <paul@paulasmuth.com>\n" 
+  "\n" \
+  "Copyright © 2012\n" \
+  "  Paul Asmuth <paul@paulasmuth.com>\n" 
 
-#define USAGE_STRING "usage: %s " \
- "{--version|--jaccard|--cosine} " \
- "[redis_key] [item_id]\n"
+#define USAGE_STRING "usage:" \
+  " %s [-xnvh] [--redis|--varnish|--memcached SERVER]... [PATTERN]...  \n" \
+  "                                                                    \n" \
+  "  -x, --regex                                                       \n" \
+  "    use regexes instead of plain keys                               \n" \
+  "                                                                    \n" \
+  "  -n, --dry-run                                                     \n" \
+  "    print the matching keys, but do not delete                      \n" \
+  "                                                                    \n" \
+  "  -v, --version                                                     \n" \
+  "    print version and exit                                          \n" \
+  "                                                                    \n" \
+  "  -h, --help                                                        \n" \
+  "    print this message and exit                                     \n" \
+  "                                                                    \n" \
+  "                                                                    \n" \
+  "Adapters:                                                           \n" \
+  "                                                                    \n" \
+  "  --redis HOST(:PORT)                                               \n" \
+  "    purge from redis HOST (multiple allowed)                        \n" \
+  "                                                                    \n" \
+  "  --memcached HOST(:PORT)                                           \n" \
+  "    purge from memcached HOST (multiple allowed)                    \n" \
+  "                                                                    \n" \
+  "  --varnish HOST(:PORT)                                             \n" \
+  "    purge from varnish HOST (multiple allowed)                      \n" \
+  "                                                                    \n" \
+  "                                                                    \n" \
+  "Redis options:                                                      \n" \
+  "                                                                    \n" \
+  "  --hdel HASH                                                       \n" \
+  "    delete keys from hash HASH                                      \n" \
+  "                                                                    \n" \
+  "  --sdel SET                                                        \n" \
+  "    delete keys from set SET                                        \n" \
+  "                                                                    \n" \
+  "  --zdel SET                                                        \n" \
+  "    delete keys from sorted set SET                                 \n" \
+  "                                                                    \n" \
+  "  --rdb DB                                                          \n" \
+  "    use redis database number DB (default is zero)                  \n"
 
 #endif
