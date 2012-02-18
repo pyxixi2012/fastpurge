@@ -3,11 +3,11 @@
 
 #define VERSION_MAJOR 0
 #define VERSION_MINOR 0
-#define VERSION_MICRO 1
+#define VERSION_PATCH 1
 
-#define VERSION_STRING "fastpurge %i.%i.%i\n" \
-  "\n" \
-  "Copyright © 2012\n" \
+#define VERSION_STRING "fastpurge %i.%i.%i\n\n"
+
+#define LICENSE_STRING "Copyright © 2012\n" \
   "  Paul Asmuth <paul@paulasmuth.com>\n" 
 
 #define USAGE_STRING "usage:" \
@@ -50,6 +50,7 @@
   "    delete keys from sorted set SET                                 \n" \
   "                                                                    \n" \
   "  --rdb DB                                                          \n" \
-  "    use redis database number DB (default is zero)                  \n"
+  "    use redis database number DB (default is zero)                  \n" \
+  "\n\n"
 
 #endif
