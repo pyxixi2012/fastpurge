@@ -1,11 +1,12 @@
+# Build stuff
+dep/
+obj/
+
 # Binary
 fastpurge
 
 # Object files
 *.o
-
-# Dependency files
-*.dep
 
 # Hidden files
 .*
