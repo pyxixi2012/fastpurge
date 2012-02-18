@@ -1,6 +1,6 @@
 #include "BaseAdapter.h"
 
-BaseAdapter::BaseAdapter(ev::loop_ref& loop_, char* address_) : loop(loop_) {
+BaseAdapter::BaseAdapter(ev::loop_ref& loop_, const char* address_) : loop(loop_) {
   regex_t xp_addr;
   regcomp(&xp_addr, XP_ADDRESS, REG_EXTENDED);
 
@@ -10,9 +10,8 @@ BaseAdapter::BaseAdapter(ev::loop_ref& loop_, char* address_) : loop(loop_) {
   } else {
   	this->address = address_;
   }
-  
 }
-
+  
 void BaseAdapter::setPatterns(std::vector<std::string> const& patterns_) {
   this->patterns = patterns_;
 }
