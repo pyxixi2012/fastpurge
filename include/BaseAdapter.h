@@ -12,10 +12,11 @@
 
 class BaseAdapter {
 protected:
-  /*struct ev::loop_ref& loop;*/
+  ev::loop_ref& loop;
+  char* address;
   std::vector<std::string> patterns;
 
-  BaseAdapter(char* address);
+  BaseAdapter(ev::loop_ref& loop_, char* address_);
 
 public:
   void setPatterns(std::vector<std::string> const&);

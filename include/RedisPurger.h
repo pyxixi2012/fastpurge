@@ -6,7 +6,7 @@
 class RedisPurger : public BaseAdapter {
 
 public:
-  RedisPurger(char* address);
+  RedisPurger(ev::loop_ref& loop_, char* address_);
   void purge();
 };
 

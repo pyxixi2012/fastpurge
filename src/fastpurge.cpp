@@ -38,8 +38,8 @@ void version(){
   printf(LICENSE_STRING);
 }
 
-void add_adapter(std::vector<BaseAdapter*>* adapters, int type, char* address){
-  adapters->push_back(new RedisPurger(address));
+void add_adapter(std::vector<BaseAdapter*>* adapters, ev::loop_ref& ev, int type, char* address){
+  adapters->push_back(new RedisPurger(ev, address));
 }
 
 static int dry_run;
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
   std::vector<BaseAdapter*> adapters;
   int c;
 
-  ev::default_loop eventLoop;
+  ev::default_loop ev;
 
   while (1) {
     int option_index = 0;
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        add_adapter(&adapters, ADAPTER_REDIS, strdup("fnord"));
+        add_adapter(&adapters, ev, ADAPTER_REDIS, strdup("fnord"));
         break;
 
       case ADAPTER_MEMCACHED:

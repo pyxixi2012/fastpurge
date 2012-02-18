@@ -1,7 +1,7 @@
 #include "RedisPurger.h"
 
-RedisPurger::RedisPurger(char* address) : BaseAdapter(address) {
-  printf("redispurger initialized: %s \n", address);
+RedisPurger::RedisPurger(ev::loop_ref& loop_, char* address_) : BaseAdapter(loop_, address_) {
+  printf("redispurger initialized: %s \n", this->address);
 }
 
 void RedisPurger::purge() {
