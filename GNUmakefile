@@ -6,23 +6,24 @@ LDFLAGS  += -lev
 
 sources  := src/fastpurge.cpp
 objects  := $(sources:.cpp=.o)
+depends  := $(sources:.cpp=.dep)
 
 bin    := $(DESTDIR)/$(PREFIX)/bin
 
-fastpurge: $(objects) 
+fastpurge: $(objects)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $(objects)
 
-.cpp.o:
+%.o: %.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
-.deps: $(sources)
-	$(CXX) $(CPPFLAGS) -M $(sources) >$@
+%.dep: %.cpp
+	$(CXX) $(CPPFLAGS) -M -MF $@ $<
 
 clean: 
 	rm -f $(objects) fastpurge
 
 distclean: clean
-	rm -f .deps
+	rm -f $(depends)
 
 install: $(bin)/fastpurge
 
@@ -36,6 +37,6 @@ $(bin):
 
 ifneq ($(MAKECMDGLOBALS),clean)
 ifneq ($(MAKECMDGLOBALS),distclean)
--include .deps
+-include $(depends)
 endif
 endif
