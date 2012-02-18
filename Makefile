@@ -4,17 +4,16 @@ PREFIX   ?= usr/local
 objects = fastpurge.o
 sources = src/fastpurge.cpp
 
+bin    := $(DESTDIR)/$(PREFIX)/bin
+
 fastpurge: $(objects) 
 	g++ $(CPPFLAGS) -o fastpurge $(objects)
 
 $(objects): $(sources) 
 	g++ $(CPPFLAGS) -c $(sources)
 
-fastpurge.cpp: include/BaseAdapter.h
-
-clean: rm $(objects) fastpurge
-
-bin    := $(DESTDIR)/$(PREFIX)/bin
+clean: 
+	rm $(objects) fastpurge
 
 install: $(bin)/fastpurge
 
