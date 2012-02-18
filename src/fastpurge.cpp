@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <cstdlib>
 #include<vector>
 #include<string>
 
@@ -23,5 +24,5 @@ int main(int argc, char* argv[]){
 
   ev::default_loop eventLoop;
 
-  return 0;
+  return EXIT_SUCCESS;
 }
