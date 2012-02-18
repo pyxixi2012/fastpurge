@@ -1,15 +1,14 @@
-CPPFLAGS ?= -Wall
-CXXFLAGS ?= -pipe -O2
+CPPFLAGS ?= -Wall -O2 -Iinclude
 PREFIX   ?= usr/local
 
 objects = fastpurge.o
 sources = src/fastpurge.cpp
 
 fastpurge: $(objects) 
-	g++ -o fastpurge $(objects)
+	g++ $(CPPFLAGS) -o fastpurge $(objects)
 
 $(objects): $(sources) 
-	g++ -c $(sources)
+	g++ $(CPPFLAGS) -c $(sources)
 
 fastpurge.cpp: include/BaseAdapter.h
 
