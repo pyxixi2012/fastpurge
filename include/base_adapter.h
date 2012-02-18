@@ -1,6 +1,11 @@
 #ifndef fastpurge_BaseAdapter_h
 #define fastpurge_BaseAdapter_h (1)
 
+#include <string>
+#include <vector>
+
+#include <ev++.h>
+
 /*! \brief base class for all supported adapters.
 *
 * This class shares common properties and (virtual) methods across all engines.
@@ -10,14 +15,13 @@
 */
 class BaseAdapter {
 protected:
-  struct ev_loop* ev;
+  struct ev::loop_ref& loop;
   std::vector<std::string> patterns;
-  adapter_config config;
+
+  BaseAdapter(ev::loop_ref&);
 
 public:
-  BaseAdapter(struct ev_loop* ev_, const std::vector<std::string>& patterns_, adapter_config* config);
-
-  /*virtual void purge(const char* keys) = 0;*/
+  virtual void purge(const char* keys) = 0;
 };
 
 #endif

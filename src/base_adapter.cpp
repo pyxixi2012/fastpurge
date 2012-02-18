@@ -1,5 +1,5 @@
-BaseAdapter::BaseAdapter(struct ev_loop* ev_,
-	const std::vector<std::string>& patterns_,
-	adapter_config* config_)
-		: ev(ev_), patterns(patterns_), config(config_) {
+#include "base_adapter.h"
+
+BaseAdapter::BaseAdapter(ev::loop_ref& loop)
+		: loop(loop) {
 }
