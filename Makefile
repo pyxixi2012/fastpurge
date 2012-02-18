@@ -1,19 +1,21 @@
-CPPFLAGS ?= -Wall -O2 -Iinclude
+CPPFLAGS ?= -Wall -O2
 PREFIX   ?= usr/local
 
-objects = fastpurge.o
-sources = src/fastpurge.cpp
+CPPFLAGS += -Iinclude
+
+sources  := src/fastpurge.cpp
+objects  := $(sources:.cpp=.o)
 
 bin    := $(DESTDIR)/$(PREFIX)/bin
 
 fastpurge: $(objects) 
-	g++ $(CPPFLAGS) -o fastpurge $(objects)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $(objects)
 
-$(objects): $(sources) 
-	g++ $(CPPFLAGS) -c $(sources)
+.cpp.o:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 clean: 
-	rm $(objects) fastpurge
+	rm -f $(objects) fastpurge
 
 install: $(bin)/fastpurge
 
@@ -23,4 +25,4 @@ $(bin)/fastpurge: fastpurge $(bin)
 $(bin):
 	mkdir -p $@
 
-.PHONY: install fastpurge
+.PHONY: clean install fastpurge
