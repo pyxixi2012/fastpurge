@@ -44,9 +44,11 @@ int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
   std::vector<BaseAdapter*> adapters;
   int c;
-  
+
+  struct ev_loop* ev = ev_default_loop(0);
+    
   while (1) {
-    int option_index = 0;
+    int option_index = 0;    
     static struct option long_options[] =
     { 
       {"redis",      1, no_argument, ADAPTER_REDIS},            
@@ -67,7 +69,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        /*add_adapter(&adapter_configs, ADAPTER_REDIS, optarg);*/        
+        adapters.push_back(new BaseAdapter(ev, optarg));        
         break;
 
       case ADAPTER_MEMCACHED:
@@ -107,8 +109,6 @@ int main(int argc, char* argv[]){
   } 
 
   /* initialize all adapters from adapter_configs */
-
-  struct ev_loop* ev = ev_default_loop(0);
 
   /* TODO: Actually do something */
 
