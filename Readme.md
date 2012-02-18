@@ -25,28 +25,28 @@ fastpurge [-xnvh] [--redis|--varnish|--memcached SERVER]... [PATTERN]...
 
 Adapters:
 
-  --redis HOST(:PORT) 
+  --redis=HOST(:PORT) 
     purge from redis HOST (multiple allowed)
 
-  --memcached HOST(:PORT) 
+  --memcached=HOST(:PORT) 
     purge from memcached HOST (multiple allowed)
 
-  --varnish HOST(:PORT) 
+  --varnish=HOST(:PORT) 
     purge from varnish HOST (multiple allowed)
 
 
 Redis options:
 
-  --hdel HASH
+  --hdel=HASH
     delete keys from hash HASH
 
-  --sdel SET
+  --sdel=SET
     delete keys from set SET
 
-  --zdel SET
+  --zdel=SET
     delete keys from sorted set SET
 
-  --rdb DB
+  --rdb=DB
     use redis database number DB (default is zero)
 ```
 
@@ -65,19 +65,19 @@ Examples
 delete all redis keys matching one of the two regexes
 
 ```
-fastpurge --redis 10.0.0.1:6379 -x "key([0-9]+)" "other_key([0-9]+)"
+fastpurge --regex --redis=10.0.0.1:6379 "key([0-9]+)" "other_key([0-9]+)"
 ```
 
 delete all keys from hash "foobar:myhash" matching two regexes
 
 ```
-fastpurge --redis 10.0.0.1:6379  -x --hdel "foobar:myhash" "key([0-9]+)" "other_key([0-9]+)"
+fastpurge --regex --redis=10.0.0.1:6379 --hdel="foobar:myhash" "key([0-9]+)" "other_key([0-9]+)"
 ```
 
 delete three redis keys from multiple servers
 
 ```
-fastpurge --redis 10.0.0.1:6379 --redis 10.0.0.2:6379 key1 key2 key3
+fastpurge --redis=10.0.0.1:6379 --redis=10.0.0.2:6379 key1 key2 key3
 ```
 
 
