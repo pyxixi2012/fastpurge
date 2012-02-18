@@ -16,17 +16,9 @@
   FIXPAUL: put options in to "bitfields-char" and pass to purgers (dry-run, regex, etc)  
 */
 
-void usage(char* binary){
-  printf(
-    VERSION_STRING,
-    VERSION_MAJOR,
-    VERSION_MINOR,
-    VERSION_PATCH
-  );
-  printf(
-    USAGE_STRING,
-    binary
-  );
+void usage(const char* binary) {
+  printf("fastpurge/%s\n\n", VERSION);
+  printf(USAGE_STRING, binary);
 }
 
 void version(){
@@ -39,35 +31,33 @@ void version(){
   printf(LICENSE_STRING);
 }
 
-static int dry_run;
-static int use_regex;
-static int silent;
+static int dry_run = 0;
+static int use_regex = 0;
+static int silent = 0;
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
   std::vector<std::string> patterns;
   std::vector<BaseAdapter*> adapters;
-  int c;
 
   ev::default_loop ev;
 
   while (1) {
     int option_index = 0;
-    static struct option long_options[] =
-    { 
-      {"redis",      1, no_argument, ADAPTER_REDIS},
-      {"memcached",  1, no_argument, ADAPTER_MEMCACHED},
-      {"varnish",    1, no_argument, ADAPTER_VARNISH},
-      {"regex",      0, &use_regex,  'x'},
-      {"help",       0, no_argument, 'h'},
-      {"version",    0, no_argument, 'v'},
-      {"dry-run",    0, &dry_run,    'd'},
-      {"silent",     0, &silent,     's'},
-      {0, 0, 0, 0}
+    static struct option long_options[] = { 
+      { "redis",     required_argument, nullptr,    ADAPTER_REDIS },
+      { "memcached", required_argument, nullptr,    ADAPTER_MEMCACHED },
+      { "varnish",   required_argument, nullptr,    ADAPTER_VARNISH },
+      { "regex",     no_argument,       &use_regex, 'x' },
+      { "help",      no_argument,       nullptr,    'h' },
+      { "version",   no_argument,       nullptr,    'v' },
+      { "dry-run",   no_argument,       &dry_run,   'd' },
+      { "silent",    no_argument,       &silent,    's' },
+      { 0, 0, 0, 0 }
     };
 
-    c = getopt_long (argc, argv, "abc:d:f:", long_options, &option_index);
+    int c = getopt_long (argc, argv, "R:M:V:xhvds", long_options, &option_index);
 
-    if (c == -1)
+    if (c < 0)
       break;
 
     switch (c) {
@@ -86,11 +76,11 @@ int main(int argc, char* argv[]){
 
       case 'v':
         version();
-        exit(0);
+        return 0;
 
       case 'h':
         usage(argv[0]);
-        exit(0);
+        return 0;
 
       default:
         break;
@@ -101,6 +91,10 @@ int main(int argc, char* argv[]){
   dry_run = !!dry_run;
   use_regex = !!use_regex;
   silent = !!silent;
+
+  if (dry_run && !silent) {
+    printf("Dry run enabled.\n");
+  }
 
   if (optind < argc) {
     while (optind < argc)
@@ -144,3 +138,4 @@ int main(int argc, char* argv[]){
   return 0;
 }
 
+// vim:ts=2:sw=2:et

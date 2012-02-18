@@ -17,7 +17,7 @@
   "  -x, --regex                                                                    \n" \
   "    use regexes instead of plain keys                                            \n" \
   "                                                                                 \n" \
-  "  -n, --dry-run                                                                  \n" \
+  "  -d, --dry-run                                                                  \n" \
   "    print the matching keys, but do not delete                                   \n" \
   "                                                                                 \n" \
   "  -s, --silent                                                                   \n" \

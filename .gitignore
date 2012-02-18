@@ -1,6 +1,11 @@
 # Build stuff
 dep/
 obj/
+include/sysconfig.h
+cmake_install.cmake
+CMakeFiles
+CMakeCache.txt
+Makefile
 
 # Binary
 fastpurge
