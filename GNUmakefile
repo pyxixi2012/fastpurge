@@ -1,7 +1,8 @@
 CPPFLAGS ?= -pedantic -Wall -O2
 PREFIX   ?= usr/local
 
-CPPFLAGS += -Iinclude
+CPPFLAGS += -std=c++0x -Iinclude
+LDFLAGS  += -lev
 
 sources  := src/fastpurge.cpp
 objects  := $(sources:.cpp=.o)
@@ -14,8 +15,14 @@ fastpurge: $(objects)
 .cpp.o:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
+.deps: $(sources)
+	$(CXX) $(CPPFLAGS) -M $< >$@
+
 clean: 
 	rm -f $(objects) fastpurge
+
+distclean: clean
+	rm -f .deps
 
 install: $(bin)/fastpurge
 
@@ -25,4 +32,10 @@ $(bin)/fastpurge: fastpurge $(bin)
 $(bin):
 	mkdir -p $@
 
-.PHONY: clean install fastpurge
+.PHONY: clean distclean install
+
+ifneq ($(MAKECMDGLOBALS),clean)
+ifneq ($(MAKECMDGLOBALS),distclean)
+-include .deps
+endif
+endif

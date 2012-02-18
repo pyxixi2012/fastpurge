@@ -1,2 +1,9 @@
+# Binary
 fastpurge
+
+# Object files
 *.o
+
+# Hidden files
+.*
+!.gitignore

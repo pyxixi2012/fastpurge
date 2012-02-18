@@ -3,6 +3,8 @@
 #include <getopt.h>
 #include <vector>
 #include <string>
+#include <cstdlib>
+#include <ev++.h>
 
 #include "version.h"
 #include "BaseAdapter.h"
@@ -81,5 +83,11 @@ int main(int argc, char* argv[]){
     ev_loop(ev, 0);
   */ 
 
-  exit(0);
+  ev::default_loop eventLoop;
+
+  /* TODO: Actually do something */
+
+  eventLoop.run();
+
+  return EXIT_SUCCESS;
 }
