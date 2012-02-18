@@ -12,6 +12,7 @@ BaseAdapter::BaseAdapter(ev::loop_ref& loop_, const char* address_) : loop(loop_
   }
 }
   
-void BaseAdapter::setPatterns(std::vector<std::string> const& patterns_) {
-  this->patterns = patterns_;
+void BaseAdapter::addStringPattern(std::string pattern) {
+  printf("registered pattern: %s\n", pattern.c_str());
+  this->patterns.push_back(pattern);
 }

@@ -113,6 +113,18 @@ int main(int argc, char* argv[]){
     return 1;
   }
 
+  if (patterns.size() == 0) {
+    printf("ERROR: no patterns/keys\n");
+    printf("  --help for more information\n");
+    return 1;
+  }
+
+  for(std::vector<std::string>::iterator pattern = patterns.begin(); pattern != patterns.end(); ++pattern) {
+    for(std::vector<int>::size_type i = 0; i != adapters.size(); i++) {
+      adapters[i]->addStringPattern(*pattern);
+    }
+  }
+
   /* TODO: Actually do something */
 
   /* ev.run(); */

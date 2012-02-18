@@ -21,7 +21,7 @@ protected:
   BaseAdapter(ev::loop_ref& loop_, char const *address_);
 
 public:
-  void setPatterns(std::vector<std::string> const&);
+  void addStringPattern(std::string);
   void setup(ev::loop_ref&);
 
   virtual void purge() = 0;
