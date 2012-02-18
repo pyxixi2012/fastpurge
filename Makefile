@@ -3,8 +3,8 @@ PREFIX   ?= usr/local
 
 CPPFLAGS += -Iinclude
 
-objects = src/fastpurge.o
-sources = src/fastpurge.cpp
+sources  := src/fastpurge.cpp
+objects  := $(sources:.cpp=.o)
 
 bin    := $(DESTDIR)/$(PREFIX)/bin
 
