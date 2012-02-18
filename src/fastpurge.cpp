@@ -13,6 +13,9 @@
 
 /*
   FIXPAUL: --dry-run is working, but -d is not
+  FIXPAUL: silent option
+  FIXPAUL: put options in to "bitfields-char" and pass to purgers (dry-run, regex, etc)
+  FIXPAUL: check pattern regexes and compile before passing
 */
 
 void usage(char* binary){
@@ -115,13 +118,25 @@ int main(int argc, char* argv[]){
     return 1;
   }
 
-  for(std::vector<std::string>::iterator pattern = patterns.begin(); pattern != patterns.end(); ++pattern) {
+  for(std::vector<int>::size_type j = 0; j != patterns.size(); j++) {
+  
+    regex_t xp_pattern;
+
+    if (use_regex) {      
+      if(regcomp(&xp_pattern, patterns[j].c_str(), REG_EXTENDED) != 0){
+        printf("invalid regex: %s\n", patterns[j].c_str());
+        exit(1);
+      }
+    }
+
     for(std::vector<int>::size_type i = 0; i != adapters.size(); i++) {
-      adapters[i]->addStringPattern(*pattern);
+      if (use_regex){
+        adapters[i]->addPattern(xp_pattern);  
+      } else {
+        adapters[i]->addPattern(patterns[j]);  
+      }
     }
   }
-
-  /* TODO: Actually do something */
 
   /* ev.run(); */
 

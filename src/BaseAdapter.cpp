@@ -12,7 +12,11 @@ BaseAdapter::BaseAdapter(ev::loop_ref& loop_, const char* address_) : loop(loop_
   }
 }
   
-void BaseAdapter::addStringPattern(std::string pattern) {
+void BaseAdapter::addPattern(std::string pattern) {
   printf("registered pattern: %s\n", pattern.c_str());
-  this->patterns.push_back(pattern);
+  /*this->patterns.push_back(pattern); <-- needs a template? */ 
+}
+
+void BaseAdapter::addPattern(regex_t&) {
+  printf("registered regex pattern\n");
 }
