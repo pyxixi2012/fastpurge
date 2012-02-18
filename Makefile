@@ -23,4 +23,4 @@ $(bin)/fastpurge: fastpurge $(bin)
 $(bin):
 	mkdir -p $@
 
-.PHONY: install
+.PHONY: install fastpurge
