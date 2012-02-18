@@ -38,10 +38,6 @@ void version(){
   printf(LICENSE_STRING);
 }
 
-void add_adapter(std::vector<BaseAdapter*>* adapters, ev::loop_ref& ev, int type, char* address){
-  adapters->push_back(new RedisPurger(ev, address));
-}
-
 static int dry_run;
 static int use_regex;
 
@@ -74,7 +70,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        add_adapter(&adapters, ev, ADAPTER_REDIS, optarg);
+        adapters.push_back(new RedisPurger(ev, optarg));        
         break;
 
       case ADAPTER_MEMCACHED:
