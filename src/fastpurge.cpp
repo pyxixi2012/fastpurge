@@ -41,7 +41,7 @@ static int use_regex;
 
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
-  std::vector<BaseAdapter*> purgers;
+  std::vector<BaseAdapter*> adapters;
   int c;
   
   while (1) {
@@ -91,24 +91,25 @@ int main(int argc, char* argv[]){
     }
   }
 
-  printf("dry-run: %i, use-regex: %i\n", !!dry_run, !!use_regex);
+  dry_run = !!dry_run;
+  use_regex = !!use_regex;  
           
   if (optind < argc){
     while (optind < argc)
-      printf ("pattern: %s \n", argv[optind++]);
+      patterns.push_back(argv[optind++]);      
   }
 
-  /*
-    purgers.push_back(new VarnishPurger(ev, patterns));
-    purgers.push_back(new RedisPurger(ev, patterns));
-  */ 
-  
+  if(adapters.size() == 0){
+    printf("ERROR: no adapters\n");    
+    printf("  --help for more information\n");
+    return 1;
+  } 
+
   struct ev_loop* ev = ev_default_loop(0);
 
   /* TODO: Actually do something */
 
   ev_loop(ev, 0);
-  
 
-  return EXIT_SUCCESS;
+  return 0;
 }
