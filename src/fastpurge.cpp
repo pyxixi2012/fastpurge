@@ -2,7 +2,7 @@
 #include<vector>
 #include<string>
 
-#include "include/BaseAdapter.h"
+#include "../include/BaseAdapter.h"
 
 int main(int argc, char* argv[]){
   printf("fnord");

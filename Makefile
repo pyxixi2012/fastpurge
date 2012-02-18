@@ -2,13 +2,18 @@ CPPFLAGS ?= -Wall
 CXXFLAGS ?= -pipe -O2
 PREFIX   ?= usr/local
 
-fastpurge: fastpurge.cpp
+objects = fastpurge.o
+sources = src/fastpurge.cpp
 
-%: %.c++
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+fastpurge: $(objects) 
+	g++ -o fastpurge $(objects)
 
-.c++:
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@ $>
+$(objects): $(sources) 
+	g++ -c $(sources)
+
+fastpurge.cpp: include/BaseAdapter.h
+
+clean: rm $(objects) fastpurge
 
 bin    := $(DESTDIR)/$(PREFIX)/bin
 
