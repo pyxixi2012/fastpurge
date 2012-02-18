@@ -43,16 +43,17 @@ static int use_regex;
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
   std::vector<BaseAdapter*> adapters;
-  std::vector<adapter_config*> adapter_configs;
   int c;
-  
+
+  struct ev_loop* ev = ev_default_loop(0);
+    
   while (1) {
-    int option_index = 0;
+    int option_index = 0;    
     static struct option long_options[] =
     { 
-      {"redis",      1, no_argument, '1'},            
-      {"memcached",  1, no_argument, '2'},
-      {"varnish",    1, no_argument, '3'},
+      {"redis",      1, no_argument, ADAPTER_REDIS},            
+      {"memcached",  1, no_argument, ADAPTER_MEMCACHED},
+      {"varnish",    1, no_argument, ADAPTER_VARNISH},
       {"help",       0, no_argument, 'h'},
       {"version",    0, no_argument, 'v'},
       {"dry-run",    0, &dry_run,    'd'},
@@ -67,15 +68,15 @@ int main(int argc, char* argv[]){
      
     switch (c) {
 
-      case '1':
-        /*add_adapter(&adapter_configs, ADAPTER_REDIS, optarg);*/        
+      case ADAPTER_REDIS:
+        adapters.push_back(new BaseAdapter(ev, optarg));        
         break;
 
-      case '2':
+      case ADAPTER_MEMCACHED:
         /*add_adapter(&adapter_configs, ADAPTER_MEMCACHED, optarg);*/        
         break;
 
-      case '3':
+      case ADAPTER_VARNISH:
         /*add_adapter(&adapter_configs, ADAPTER_VARNISH, optarg);*/
         break;
 
@@ -96,12 +97,12 @@ int main(int argc, char* argv[]){
   dry_run = !!dry_run;
   use_regex = !!use_regex;  
           
-  if (optind < argc){
+  if (optind < argc) {
     while (optind < argc)
       patterns.push_back(argv[optind++]);      
   }
 
-  if(adapters.size() == 0){
+  if (adapters.size() == 0) {
     printf("ERROR: no adapters\n");    
     printf("  --help for more information\n");
     return 1;

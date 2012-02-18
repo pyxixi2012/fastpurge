@@ -1,5 +1,5 @@
 #ifndef fastpurge_BaseAdapter_h
-#define fastpurge_BaseAdapter_h (1)
+#define fastpurge_BaseAdapter_h
 
 #include <string>
 #include <vector>
