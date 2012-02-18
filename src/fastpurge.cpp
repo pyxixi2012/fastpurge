@@ -73,7 +73,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        adapters.push_back(new RedisPurger(ev, optarg));        
+        adapters.push_back(new RedisPurger(ev, optarg));
         break;
 
       case ADAPTER_MEMCACHED:
@@ -120,10 +120,10 @@ int main(int argc, char* argv[]){
   }
 
   for(std::vector<int>::size_type j = 0; j != patterns.size(); j++) {
-  
+
     regex_t xp_pattern;
 
-    if (use_regex) {      
+    if (use_regex) {
       if(regcomp(&xp_pattern, patterns[j].c_str(), REG_EXTENDED) != 0){
         printf("invalid regex: %s\n", patterns[j].c_str());
         exit(1);
@@ -132,9 +132,9 @@ int main(int argc, char* argv[]){
 
     for(std::vector<int>::size_type i = 0; i != adapters.size(); i++) {
       if (use_regex){
-        adapters[i]->addPattern(xp_pattern);  
+        adapters[i]->addPattern(xp_pattern);
       } else {
-        adapters[i]->addPattern(patterns[j]);  
+        adapters[i]->addPattern(patterns[j]);
       }
     }
   }
