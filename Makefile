@@ -1,4 +1,4 @@
-CPPFLAGS ?= -Wall -O2
+CPPFLAGS ?= -pedantic -Wall -O2
 PREFIX   ?= usr/local
 
 CPPFLAGS += -Iinclude
