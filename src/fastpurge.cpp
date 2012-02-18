@@ -13,9 +13,7 @@
 
 /*
   FIXPAUL: --dry-run is working, but -d is not
-  FIXPAUL: silent option
-  FIXPAUL: put options in to "bitfields-char" and pass to purgers (dry-run, regex, etc)
-  FIXPAUL: check pattern regexes and compile before passing
+  FIXPAUL: put options in to "bitfields-char" and pass to purgers (dry-run, regex, etc)  
 */
 
 void usage(char* binary){
@@ -43,6 +41,7 @@ void version(){
 
 static int dry_run;
 static int use_regex;
+static int silent;
 
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
@@ -58,10 +57,11 @@ int main(int argc, char* argv[]){
       {"redis",      1, no_argument, ADAPTER_REDIS},
       {"memcached",  1, no_argument, ADAPTER_MEMCACHED},
       {"varnish",    1, no_argument, ADAPTER_VARNISH},
+      {"regex",      0, &use_regex,  'x'},
       {"help",       0, no_argument, 'h'},
       {"version",    0, no_argument, 'v'},
       {"dry-run",    0, &dry_run,    'd'},
-      {"regex",      0, &use_regex,  'x'},
+      {"silent",     0, &silent,     's'},
       {0, 0, 0, 0}
     };
 
@@ -100,6 +100,7 @@ int main(int argc, char* argv[]){
 
   dry_run = !!dry_run;
   use_regex = !!use_regex;
+  silent = !!silent;
 
   if (optind < argc) {
     while (optind < argc)
