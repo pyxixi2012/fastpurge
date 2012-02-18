@@ -9,6 +9,7 @@
 #include "version.h"
 #include "adapter_config.h"
 #include "BaseAdapter.h"
+#include "RedisPurger.h"
 
 /*
   FIXPAUL: --dry-run is working, but -d is not
@@ -42,10 +43,10 @@ static int use_regex;
 
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
-  std::vector<BaseAdapter*> adapters;
+  std::vector<RedisPurger*> adapters;
   int c;
 
-  struct ev_loop* ev = ev_default_loop(0);
+  ev::default_loop ev;
 
   while (1) {
     int option_index = 0;
@@ -69,7 +70,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        adapters.push_back(new BaseAdapter(ev, optarg));
+        adapters.push_back(new RedisPurger(ev));
         break;
 
       case ADAPTER_MEMCACHED:
@@ -108,11 +109,9 @@ int main(int argc, char* argv[]){
     return 1;
   }
 
-  ev::default_loop eventLoop;
-
   /* TODO: Actually do something */
 
-  eventLoop.run();
+  /* ev.run(); */
 
   return 0;
 }
