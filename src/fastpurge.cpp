@@ -43,7 +43,7 @@ static int use_regex;
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
   std::vector<BaseAdapter*> adapters;
-  adapter_config* adapter_configs;
+  std::vector<adapter_config*> adapter_configs;
   int c;
   
   while (1) {
@@ -68,15 +68,15 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case '1':
-        printf("adapter -> redis: %s\n", optarg);
+        /*add_adapter(&adapter_configs, ADAPTER_REDIS, optarg);*/        
         break;
 
       case '2':
-        printf("adapter -> memcached: %s\n", optarg);
+        /*add_adapter(&adapter_configs, ADAPTER_MEMCACHED, optarg);*/        
         break;
 
       case '3':
-        printf("adapter -> varnish: %s\n", optarg);
+        /*add_adapter(&adapter_configs, ADAPTER_VARNISH, optarg);*/
         break;
 
       case 'v':
@@ -106,6 +106,8 @@ int main(int argc, char* argv[]){
     printf("  --help for more information\n");
     return 1;
   } 
+
+  /* initialize all adapters from adapter_configs */
 
   struct ev_loop* ev = ev_default_loop(0);
 
