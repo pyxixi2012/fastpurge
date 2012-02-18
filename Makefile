@@ -1,5 +1,7 @@
-CPPFLAGS ?= -Wall -O2 -Iinclude
+CPPFLAGS ?= -Wall -O2
 PREFIX   ?= usr/local
+
+CPPFLAGS += -Iinclude
 
 objects = fastpurge.o
 sources = src/fastpurge.cpp
