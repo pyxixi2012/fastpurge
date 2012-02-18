@@ -13,10 +13,10 @@
 class BaseAdapter {
 protected:
   ev::loop_ref& loop;
-  char* address;
+  char const *address;
   std::vector<std::string> patterns;
 
-  BaseAdapter(ev::loop_ref& loop_, char* address_);
+  BaseAdapter(ev::loop_ref& loop_, char const *address_);
 
 public:
   void setPatterns(std::vector<std::string> const&);
