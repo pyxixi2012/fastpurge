@@ -43,7 +43,7 @@ static int use_regex;
 
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
-  std::vector<BaseAdapter*> adapters;
+  std::vector<RedisPurger*> adapters;
   int c;
 
   ev::default_loop eventLoop;
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        /* Push redis adapter */
+        adapters.push_back(new RedisPurger(ev));
         break;
 
       case ADAPTER_MEMCACHED:
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]){
 
   /* TODO: Actually do something */
 
-  eventLoop.run();
+  /* ev.run(); */
 
   return 0;
 }
