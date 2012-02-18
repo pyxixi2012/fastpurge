@@ -2,7 +2,7 @@ class BaseAdapter {
 protected:
   struct ev_loop* ev;
   char* address;
-  std::vector<std::string> patterns;  
+  std::vector<std::string> patterns;
 
 public:
   BaseAdapter(struct ev_loop* ev_, char* address_) : ev(ev_), address(address_){
