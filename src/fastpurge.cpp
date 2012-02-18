@@ -33,6 +33,8 @@ void version(){
 }
 
 int main(int argc, char* argv[]){
+  std::vector<std::string> patterns;
+  std::vector<BaseAdapter*> purgers;
   int c;
   
   while (1) {
@@ -67,20 +69,12 @@ int main(int argc, char* argv[]){
           
   if (optind < argc){
     while (optind < argc)
-      printf ("%s \n", argv[optind++]);
+      printf ("pattern: %s \n", argv[optind++]);
   }
 
-  printf("fnord!\n");
-
   /*
-    
-    std::vector<std::string> patterns;
-    std::list<Engine*> purgers;
-
     purgers.push_back(new VarnishPurger(ev, patterns));
     purgers.push_back(new RedisPurger(ev, patterns));
-
-   
   */ 
   
   struct ev_loop* ev = ev_default_loop(0);
