@@ -21,5 +21,7 @@ int main(int argc, char* argv[]){
 	ev_loop(ev, 0);
   */ 
 
+  ev::default_loop eventLoop;
+
   return 0;
 }
