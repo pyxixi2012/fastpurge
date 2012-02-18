@@ -16,7 +16,7 @@ fastpurge: $(objects)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 .deps: $(sources)
-	$(CXX) $(CPPFLAGS) -M $< >$@
+	$(CXX) $(CPPFLAGS) -M $(sources) >$@
 
 clean: 
 	rm -f $(objects) fastpurge
