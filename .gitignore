@@ -4,6 +4,9 @@ fastpurge
 # Object files
 *.o
 
+# Dependency files
+*.dep
+
 # Hidden files
 .*
 !.gitignore
