@@ -97,12 +97,12 @@ int main(int argc, char* argv[]){
   dry_run = !!dry_run;
   use_regex = !!use_regex;  
           
-  if (optind < argc){
+  if (optind < argc) {
     while (optind < argc)
       patterns.push_back(argv[optind++]);      
   }
 
-  if(adapters.size() == 0){
+  if (adapters.size() == 0) {
     printf("ERROR: no adapters\n");    
     printf("  --help for more information\n");
     return 1;
