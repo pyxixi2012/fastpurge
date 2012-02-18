@@ -9,7 +9,7 @@
 
 #define LICENSE_STRING "Copyright © 2012\n" \
   "  Paul Asmuth <paul@paulasmuth.com>  \n" \
-  "  Mikael Voss <mikael@illdefined.org>\n" 
+  "  Mikael Voss <mikael@illdefined.org>\n"
 
 #define USAGE_STRING "usage:" \
   " %s [-xnvh] [--redis|--varnish|--memcached SERVER]... [PATTERN]...  \n" \

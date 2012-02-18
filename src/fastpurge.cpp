@@ -16,22 +16,22 @@
 
 void usage(char* binary){
   printf(
-    VERSION_STRING, 
-    VERSION_MAJOR, 
-    VERSION_MINOR, 
+    VERSION_STRING,
+    VERSION_MAJOR,
+    VERSION_MINOR,
     VERSION_PATCH
   );
   printf(
-    USAGE_STRING, 
+    USAGE_STRING,
     binary
   );
 }
 
 void version(){
   printf(
-    VERSION_STRING, 
-    VERSION_MAJOR, 
-    VERSION_MINOR, 
+    VERSION_STRING,
+    VERSION_MAJOR,
+    VERSION_MINOR,
     VERSION_PATCH
   );
   printf(LICENSE_STRING);
@@ -46,12 +46,12 @@ int main(int argc, char* argv[]){
   int c;
 
   struct ev_loop* ev = ev_default_loop(0);
-    
+
   while (1) {
-    int option_index = 0;    
+    int option_index = 0;
     static struct option long_options[] =
     { 
-      {"redis",      1, no_argument, ADAPTER_REDIS},            
+      {"redis",      1, no_argument, ADAPTER_REDIS},
       {"memcached",  1, no_argument, ADAPTER_MEMCACHED},
       {"varnish",    1, no_argument, ADAPTER_VARNISH},
       {"help",       0, no_argument, 'h'},
@@ -60,24 +60,24 @@ int main(int argc, char* argv[]){
       {"regex",      0, &use_regex,  'x'},
       {0, 0, 0, 0}
     };
-          
+
     c = getopt_long (argc, argv, "abc:d:f:", long_options, &option_index);
 
     if (c == -1)
       break;
-     
+
     switch (c) {
 
       case ADAPTER_REDIS:
-        adapters.push_back(new BaseAdapter(ev, optarg));        
+        adapters.push_back(new BaseAdapter(ev, optarg));
         break;
 
       case ADAPTER_MEMCACHED:
-        /*add_adapter(&adapter_configs, ADAPTER_MEMCACHED, optarg);*/        
+        printf("not yet implemented\n");
         break;
 
       case ADAPTER_VARNISH:
-        /*add_adapter(&adapter_configs, ADAPTER_VARNISH, optarg);*/
+        printf("not yet implemented\n");
         break;
 
       case 'v':
@@ -88,27 +88,25 @@ int main(int argc, char* argv[]){
         usage(argv[0]);
         exit(0);
 
-      default:       
+      default:
         break;
 
     }
   }
 
   dry_run = !!dry_run;
-  use_regex = !!use_regex;  
-          
+  use_regex = !!use_regex;
+
   if (optind < argc) {
     while (optind < argc)
-      patterns.push_back(argv[optind++]);      
+      patterns.push_back(argv[optind++]);
   }
 
   if (adapters.size() == 0) {
-    printf("ERROR: no adapters\n");    
+    printf("ERROR: no adapters\n");
     printf("  --help for more information\n");
     return 1;
-  } 
-
-  /* initialize all adapters from adapter_configs */
+  }
 
   ev::default_loop eventLoop;
 
