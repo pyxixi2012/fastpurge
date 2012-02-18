@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
   std::vector<BaseAdapter*> adapters;
   int c;
 
-  ev::default_loop ev;
+  ev::default_loop eventLoop;
 
   while (1) {
     int option_index = 0;
