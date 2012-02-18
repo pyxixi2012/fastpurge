@@ -74,7 +74,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        add_adapter(&adapters, ev, ADAPTER_REDIS, strdup("fnord"));
+        add_adapter(&adapters, ev, ADAPTER_REDIS, optarg);
         break;
 
       case ADAPTER_MEMCACHED:
