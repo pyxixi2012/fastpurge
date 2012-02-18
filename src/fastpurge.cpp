@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <string.h>
 #include <vector>
 #include <string>
 #include <cstdlib>
 #include <ev++.h>
 
 #include "version.h"
-#include "adapter_config.h"
 #include "BaseAdapter.h"
 #include "RedisPurger.h"
 
@@ -38,12 +38,16 @@ void version(){
   printf(LICENSE_STRING);
 }
 
+void add_adapter(std::vector<BaseAdapter*>* adapters, int type, char* address){
+  adapters->push_back(new RedisPurger(address));
+}
+
 static int dry_run;
 static int use_regex;
 
 int main(int argc, char* argv[]){
   std::vector<std::string> patterns;
-  std::vector<RedisPurger*> adapters;
+  std::vector<BaseAdapter*> adapters;
   int c;
 
   ev::default_loop ev;
@@ -70,7 +74,7 @@ int main(int argc, char* argv[]){
     switch (c) {
 
       case ADAPTER_REDIS:
-        adapters.push_back(new RedisPurger(ev));
+        add_adapter(&adapters, ADAPTER_REDIS, strdup("fnord"));
         break;
 
       case ADAPTER_MEMCACHED:

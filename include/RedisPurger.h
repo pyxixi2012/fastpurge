@@ -3,17 +3,11 @@
 
 #include "BaseAdapter.h"
 
-class RedisPurger
-	: public BaseAdapter {
-private:
-	/* Redis specific variables */
+class RedisPurger : public BaseAdapter {
 
 public:
-	RedisPurger(ev::loop_ref &);
-
-	/* Setter methods */
-
-	void purge();
+  RedisPurger(char* address);
+  void purge();
 };
 
 #endif
