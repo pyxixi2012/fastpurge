@@ -2,6 +2,8 @@
 #include<vector>
 #include<string>
 
+#include <ev++.h>
+
 #include "version.h"
 #include "BaseAdapter.h"
 
