@@ -25,4 +25,4 @@ $(bin)/fastpurge: fastpurge $(bin)
 $(bin):
 	mkdir -p $@
 
-.PHONY: clean install fastpurge
+.PHONY: clean install
