@@ -1,7 +1,7 @@
 CPPFLAGS ?= -pedantic -Wall -O2
 PREFIX   ?= usr/local
 
-CPPFLAGS += -Iinclude
+CPPFLAGS += -std=c++0x -Iinclude
 
 sources  := src/fastpurge.cpp
 objects  := $(sources:.cpp=.o)
