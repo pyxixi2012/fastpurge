@@ -21,7 +21,9 @@ protected:
   BaseAdapter(ev::loop_ref&);
 
 public:
-  virtual void purge(const char* keys) = 0;
+  void setPatterns(std::vector<std::string> const&);
+
+  virtual void purge() = 0;
 };
 
 #endif
