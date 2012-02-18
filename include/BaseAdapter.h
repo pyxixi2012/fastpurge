@@ -10,7 +10,7 @@
 #define ADAPTER_MEMCACHED 2
 #define ADAPTER_VARNISH 3
 
-#define XP_ADDRESS "([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})"
+#define XP_ADDRESS "^([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})(:([0-9]{1,6}))?$"
 
 class BaseAdapter {
 protected:
