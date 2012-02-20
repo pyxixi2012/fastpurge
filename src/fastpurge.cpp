@@ -17,7 +17,6 @@
 */
 
 void usage(const char* binary) {
-  printf("fastpurge/%s\n\n", VERSION);
   printf(USAGE_STRING, binary);
 }
 
