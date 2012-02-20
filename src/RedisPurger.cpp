@@ -29,7 +29,8 @@ void RedisPurger::purgeWithoutRegex() {
 		if (!silent)
 			printf("delete key: %s\n", pattern.c_str());				
 
-		purgeKey(pattern);
+    if (!dry_run)
+		  purgeKey(pattern);
 	}
 }
 
