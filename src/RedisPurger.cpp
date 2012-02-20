@@ -36,12 +36,15 @@ void RedisPurger::purgeWithoutRegex() {
 
 void RedisPurger::purgeWithRegex() {	
 	printf("getting list of keys from redis %s\n", this->address);
-	/* FIXPAUL: implement hdel/zdel/sdel */
-  redisAsyncCommand(this->redis, (void (*)(redisAsyncContext*, void*, void*))&RedisPurger::onKeydata, this, "KEYS");
+	/* FIXPAUL: implement hdel/zdel/sdel, also this line is ugly... */
+	redisAsyncCommand(this->redis, (void (*)(redisAsyncContext*, void*, void*))&RedisPurger::onKeydata, this, "KEYS *");
 }
 
-void RedisPurger::purgeMatchingKeys(std::vector<std::string> keys) {
-  printf("BAAAAM!\n");
+void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
+	redisReply *keys = (redisReply*)keys_ptr;
+	for (unsigned int i = 0; i < keys->elements; i++){ 
+		printf("KEY: %s\n", keys->element[i]->str);
+	}
 }
 
 void RedisPurger::purgeKey(std::string key) {
@@ -49,11 +52,9 @@ void RedisPurger::purgeKey(std::string key) {
 	redisAsyncCommand(this->redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
 }
 
-void RedisPurger::onKeydata(redisAsyncContext *redis, void *response, void *privdata) {
-	RedisPurger *self = reinterpret_cast<RedisPurger *>(privdata);
-	std::vector<std::string> keys;
-  self->purgeMatchingKeys(keys);
-  printf("response, yay\n");
+void RedisPurger::onKeydata(redisAsyncContext *redis, void* response, void* privdata) {
+	RedisPurger *self = reinterpret_cast<RedisPurger *>(privdata);	
+	self->purgeMatchingKeys(response);  
 }
 
 void RedisPurger::onConnect(const redisAsyncContext* redis, int status) {
