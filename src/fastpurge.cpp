@@ -8,6 +8,7 @@
 #include <ev++.h>
 
 #include "version.h"
+#include "fastpurge.h"
 #include "BaseAdapter.h"
 #include "RedisPurger.h"
 
@@ -30,9 +31,9 @@ void version(){
   printf(LICENSE_STRING);
 }
 
-static int dry_run = 0;
-static int use_regex = 0;
-static int silent = 0;
+int dry_run = 0;
+int use_regex = 0;
+int silent = 0;
 
 int main(int argc, char* argv[]) {
   std::vector<std::string> patterns;
