@@ -9,12 +9,16 @@ void RedisPurger::purge() {
 	printf("let's go!\n");
 
 	/* FIXPAUL: use ip port from this->address */
-	redisAsyncContext *c = redisAsyncConnect("127.0.0.1", 6379);
-	redisLibevAttach(EV_DEFAULT_ c);
+	redisAsyncContext* redis = redisAsyncConnect("127.0.0.1", 6379);
+	redisLibevAttach(this->loop, redis);
 
-	if (c->err) {
-		printf("can't connect to redis %s - %s\n", this->address, c->errstr);
-		exit(1);
+	/* FIXPAUL: man this is ugly... can we make it better? :) */
+	/*void (*onConnectPtr)(const redisAsyncContext*, int) = &RedisPurger::onConnect;
+	redisAsyncSetConnectCallback(redis, onConnectPtr);*/
+  //redisAsyncSetDisconnectCallback(redis, onDisconnect);
+
+	if (redis->err) {		
+		return;
 	}
 
 	if (!use_regex) {
@@ -23,7 +27,7 @@ void RedisPurger::purge() {
 			if (!silent)
 				printf("delete key: %s\n", pattern.c_str());				
 
-			purgeKey(c, pattern);
+			purgeKey(redis, pattern);
 		}
 
 	} else {
@@ -38,4 +42,22 @@ void RedisPurger::purge() {
 void RedisPurger::purgeKey(redisAsyncContext *redis, std::string key) {
 	/* FIXPAUL: implement hdel/zdel/sdel */
 	redisAsyncCommand(redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
+}
+
+void RedisPurger::onConnect(const redisAsyncContext *redis, int status) {
+	if (status != REDIS_OK) {
+		printf("ERROR: %s\n", redis->errstr);
+		return;
+	}
+	/* FIXPAUL: print connection successful with server addr */
+	printf("Connected...\n");
+}
+
+void RedisPurger::onDisconnect(const redisAsyncContext *redis, int status) {
+	if (status != REDIS_OK) {
+		printf("ERROR: %s\n", redis->errstr);
+		return;
+	}	
+	/* FIXPAUL: print connection failed with server addr */
+	printf("Disconnected...\n");
 }

@@ -137,7 +137,7 @@ int main(int argc, char* argv[]) {
 		adapter->purge();
 	}
 	
-	ev_loop(EV_DEFAULT_ 0);
+	ev_loop(ev, 0);
 
 	return 0;
 }

@@ -14,6 +14,9 @@ public:
 	RedisPurger(ev::loop_ref& loop_, char const *address_);
 	void purge();
 	void purgeKey(redisAsyncContext *redis, std::string key);
+
+	void onConnect(const redisAsyncContext *redis, int status);
+	void onDisconnect(const redisAsyncContext *redis, int status);
 };
 
 #endif
