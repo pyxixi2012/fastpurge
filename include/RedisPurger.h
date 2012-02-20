@@ -15,8 +15,8 @@ public:
 	void purge();
 	void purgeKey(redisAsyncContext *redis, std::string key);
 
-	void onConnect(const redisAsyncContext *redis, int status);
-	void onDisconnect(const redisAsyncContext *redis, int status);
+	static void onConnect(const redisAsyncContext *redis, int status);
+	static void onDisconnect(const redisAsyncContext *redis, int status);
 };
 
 #endif

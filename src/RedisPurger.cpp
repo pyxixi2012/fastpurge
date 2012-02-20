@@ -5,15 +5,13 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 	printf("redispurger initialized: %s -> %i \n", this->address, dry_run);
 }
 
-void RedisPurger::purge() {
-	printf("let's go!\n");
-
+void RedisPurger::purge() {	
 	/* FIXPAUL: use ip port from this->address */
-	redisAsyncContext* redis = redisAsyncConnect("127.0.0.1", 6379);	
+	redisAsyncContext* redis = redisAsyncConnect("127.0.0.1", 6379);		
 	redisLibevAttach(this->loop, redis);
 
-	/* FIXPAUL: WHY U SEGFAULT ON ME? */
-	redisAsyncSetDisconnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onConnect);
+	/* FIXPAUL: this is ugly */
+	redisAsyncSetConnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onConnect);    
 	redisAsyncSetDisconnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onDisconnect);    
 
 	if (redis->err) {		
