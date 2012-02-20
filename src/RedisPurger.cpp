@@ -9,13 +9,12 @@ void RedisPurger::purge() {
 	printf("let's go!\n");
 
 	/* FIXPAUL: use ip port from this->address */
-	redisAsyncContext* redis = redisAsyncConnect("127.0.0.1", 6379);
+	redisAsyncContext* redis = redisAsyncConnect("127.0.0.1", 6379);	
 	redisLibevAttach(this->loop, redis);
 
-	/* FIXPAUL: man this is ugly... can we make it better? :) */
-	/*void (*onConnectPtr)(const redisAsyncContext*, int) = &RedisPurger::onConnect;
-	redisAsyncSetConnectCallback(redis, onConnectPtr);*/
-  //redisAsyncSetDisconnectCallback(redis, onDisconnect);
+	/* FIXPAUL: WHY U SEGFAULT ON ME? */
+	redisAsyncSetDisconnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onConnect);
+	redisAsyncSetDisconnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onDisconnect);    
 
 	if (redis->err) {		
 		return;
