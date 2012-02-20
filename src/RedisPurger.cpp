@@ -10,6 +10,7 @@ void RedisPurger::purge() {
 
 	/* FIXPAUL: use ip port from this->address */
 	redisAsyncContext *c = redisAsyncConnect("127.0.0.1", 6379);
+	redisLibevAttach(EV_DEFAULT_ c);
 
 	if (c->err) {
 		printf("can't connect to redis %s - %s\n", this->address, c->errstr);
