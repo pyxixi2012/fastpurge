@@ -15,11 +15,11 @@ void RedisPurger::purge() {
 		printf("can't connect to redis %s - %s\n", this->address, c->errstr);
 		exit(1);
 	}
-
-
-
 	if (!use_regex) {
-	
+		printf("simple delete\n");	
+		for(auto& pattern: this->patterns){
+		  printf("delete key: %s\n", pattern.c_str());	
+		}
 	} else {
 		/* we need to get a list of keys from redis first */
 		printf("get redis keys\n");
