@@ -13,8 +13,7 @@
 #include "RedisPurger.h"
 
 /*
-	FIXPAUL: --dry-run is working, but -d is not  
-	FIXPAUL: we pass ev to the purgers, but actually run another ev_loop(EV_DEFAULT_ 0);
+	FIXPAUL: --dry-run is working, but -d is not  	
 */
 
 void usage(const char* binary) {

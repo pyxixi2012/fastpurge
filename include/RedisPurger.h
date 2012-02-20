@@ -15,6 +15,8 @@ protected:
 public:
 	RedisPurger(ev::loop_ref& loop_, const char* address_);
 	void purge();
+	void purgeWithoutRegex();
+	void purgeWithRegex();	
 	void purgeKey(std::string key);
 
 	static void onConnect(const redisAsyncContext* redis, int status);

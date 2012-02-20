@@ -17,21 +17,25 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 }
 
 void RedisPurger::purge() {	
-	if (!use_regex) {
-			
-		for(auto& pattern: this->string_patterns){
-			if (!silent)
-				printf("delete key: %s\n", pattern.c_str());				
-
-			purgeKey(pattern);
-		}
-
+	if (use_regex) {			
+		purgeWithRegex();
 	} else {
-
-		/* we need to get a list of keys from redis first */
-		printf("get redis keys\n");
-
+		purgeWithoutRegex();
 	}
+}
+
+void RedisPurger::purgeWithoutRegex() {
+	for(auto& pattern: this->string_patterns){
+		if (!silent)
+			printf("delete key: %s\n", pattern.c_str());				
+
+		purgeKey(pattern);
+	}
+}
+
+void RedisPurger::purgeWithRegex() {
+	/* FIXPAUL: implement purgeWithRegex */
+	printf("regex purge not yet implemented \n");
 }
 
 void RedisPurger::purgeKey(std::string key) {
