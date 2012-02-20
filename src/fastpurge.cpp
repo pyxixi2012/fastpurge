@@ -70,12 +70,12 @@ int main(int argc, char* argv[]) {
 				break;
 
 			case ADAPTER_MEMCACHED:
-				printf("not yet implemented\n");
-				break;
+				printf("ERROR: memcached adapter is not yet implemented\n");
+				return 1;
 
 			case ADAPTER_VARNISH:
-				printf("not yet implemented\n");
-				break;
+				printf("ERROR: varnish adapter is not yet implemented\n");
+				return 1;
 
 			case OPT_HDEL:			
 				for (const auto& adapter: adapters)
