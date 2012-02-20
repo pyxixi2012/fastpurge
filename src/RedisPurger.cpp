@@ -2,29 +2,28 @@
 #include "RedisPurger.h"
 
 RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapter(loop_, address_) {
-	printf("redispurger initialized: %s -> %i \n", this->address, dry_run);
+	/* FIXPAUL: use ip port from this->address */
+	this->redis = redisAsyncConnect("127.0.0.1", 6379);		
+	redisLibevAttach(this->loop, this->redis);
+
+	/* FIXPAUL: this is ugly */
+	redisAsyncSetConnectCallback(this->redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onConnect);    
+	redisAsyncSetDisconnectCallback(this->redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onDisconnect);    
+
+	if (redis->err) {		
+		printf("ERROR: %s\n", this->redis->errstr);	
+		exit(1);
+	}
 }
 
 void RedisPurger::purge() {	
-	/* FIXPAUL: use ip port from this->address */
-	redisAsyncContext* redis = redisAsyncConnect("127.0.0.1", 6379);		
-	redisLibevAttach(this->loop, redis);
-
-	/* FIXPAUL: this is ugly */
-	redisAsyncSetConnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onConnect);    
-	redisAsyncSetDisconnectCallback(redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onDisconnect);    
-
-	if (redis->err) {		
-		return;
-	}
-
 	if (!use_regex) {
 			
 		for(auto& pattern: this->string_patterns){
 			if (!silent)
 				printf("delete key: %s\n", pattern.c_str());				
 
-			purgeKey(redis, pattern);
+			purgeKey(pattern);
 		}
 
 	} else {
@@ -33,15 +32,14 @@ void RedisPurger::purge() {
 		printf("get redis keys\n");
 
 	}
-
 }
 
-void RedisPurger::purgeKey(redisAsyncContext *redis, std::string key) {
+void RedisPurger::purgeKey(std::string key) {
 	/* FIXPAUL: implement hdel/zdel/sdel */
-	redisAsyncCommand(redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
+	redisAsyncCommand(this->redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
 }
 
-void RedisPurger::onConnect(const redisAsyncContext *redis, int status) {
+void RedisPurger::onConnect(const redisAsyncContext* redis, int status) {
 	if (status != REDIS_OK) {
 		printf("ERROR: %s\n", redis->errstr);
 		return;
@@ -50,7 +48,7 @@ void RedisPurger::onConnect(const redisAsyncContext *redis, int status) {
 	printf("Connected...\n");
 }
 
-void RedisPurger::onDisconnect(const redisAsyncContext *redis, int status) {
+void RedisPurger::onDisconnect(const redisAsyncContext* redis, int status) {
 	if (status != REDIS_OK) {
 		printf("ERROR: %s\n", redis->errstr);
 		return;

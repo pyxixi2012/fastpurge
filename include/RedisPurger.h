@@ -9,14 +9,16 @@
 #include "BaseAdapter.h"
 
 class RedisPurger : public BaseAdapter {
+protected:
+	redisAsyncContext* redis;
 
 public:
-	RedisPurger(ev::loop_ref& loop_, char const *address_);
+	RedisPurger(ev::loop_ref& loop_, const char* address_);
 	void purge();
-	void purgeKey(redisAsyncContext *redis, std::string key);
+	void purgeKey(std::string key);
 
-	static void onConnect(const redisAsyncContext *redis, int status);
-	static void onDisconnect(const redisAsyncContext *redis, int status);
+	static void onConnect(const redisAsyncContext* redis, int status);
+	static void onDisconnect(const redisAsyncContext* redis, int status);
 };
 
 #endif
