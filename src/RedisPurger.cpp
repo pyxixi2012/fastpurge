@@ -2,8 +2,10 @@
 #include "RedisPurger.h"
 
 RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapter(loop_, address_) {
+	this->redisKeyMode = REDIS_KEYMODE_GLOB;
+
 	/* FIXPAUL: use ip port from this->address */
-	this->redis = redisAsyncConnect("127.0.0.1", 6379);		
+	this->redis = redisAsyncConnect("127.0.0.1", 6379);			
 	redisLibevAttach(this->loop, this->redis);
 
 	/* FIXPAUL: this is ugly */
@@ -13,6 +15,27 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 	if (redis->err) {		
 		printf("ERROR: %s\n", this->redis->errstr);	
 		exit(1);
+	}
+}
+
+void RedisPurger::setOption(char opt, char* value){
+	switch (opt) {
+
+		case OPT_HDEL:
+			this->redisKeyMode = REDIS_KEYMODE_HDEL;
+			this->redisKeyString = value;
+			break;
+
+		case OPT_SDEL:
+			this->redisKeyMode = REDIS_KEYMODE_SDEL;
+			this->redisKeyString = value;
+			break;
+
+		case OPT_ZDEL:
+			this->redisKeyMode = REDIS_KEYMODE_ZDEL;
+			this->redisKeyString = value;
+			break;
+
 	}
 }
 
@@ -56,6 +79,14 @@ void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
 }
 
 void RedisPurger::purgeKey(std::string key) {
+	switch (this->redisKeyMode) {
+		case REDIS_KEYMODE_GLOB:
+			printf("glob delete\n");
+			break;
+		case REDIS_KEYMODE_HDEL:
+			printf("hdel delete\n");
+			break;
+	}
 	/* FIXPAUL: implement hdel/zdel/sdel */
 	redisAsyncCommand(this->redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
 }

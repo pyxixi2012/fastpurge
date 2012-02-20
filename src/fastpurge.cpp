@@ -13,7 +13,8 @@
 #include "RedisPurger.h"
 
 /*
-	FIXPAUL: --dry-run is working, but -d is not  	
+	FIXPAUL: --dry-run is working, but -d is not  
+	FIXPAUL: --rdb=0 is not implemented yet	
 */
 
 void usage(const char* binary) {
@@ -46,6 +47,10 @@ int main(int argc, char* argv[]) {
 			{ "redis",     required_argument, nullptr,    ADAPTER_REDIS },
 			{ "memcached", required_argument, nullptr,    ADAPTER_MEMCACHED },
 			{ "varnish",   required_argument, nullptr,    ADAPTER_VARNISH },
+			{ "hdel",      required_argument, nullptr,    OPT_HDEL },
+			{ "zdel",      required_argument, nullptr,    OPT_ZDEL },
+			{ "sdel",      required_argument, nullptr,    OPT_SDEL },
+			{ "rdb",       required_argument, nullptr,    OPT_RDB  },
 			{ "regex",     no_argument,       &use_regex, 'x' },
 			{ "help",      no_argument,       nullptr,    'h' },
 			{ "version",   no_argument,       nullptr,    'v' },
@@ -71,6 +76,21 @@ int main(int argc, char* argv[]) {
 
 			case ADAPTER_VARNISH:
 				printf("not yet implemented\n");
+				break;
+
+			case OPT_HDEL:			
+				for (const auto& adapter: adapters)
+					adapter->setOption(OPT_HDEL, optarg);
+				break;
+
+			case OPT_SDEL:			
+				for (const auto& adapter: adapters)
+					adapter->setOption(OPT_SDEL, optarg);
+				break;
+
+			case OPT_ZDEL:			
+				for (const auto& adapter: adapters)
+					adapter->setOption(OPT_ZDEL, optarg);
 				break;
 
 			case 'v':
@@ -140,3 +160,4 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
+

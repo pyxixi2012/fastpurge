@@ -21,11 +21,12 @@ protected:
 
 	BaseAdapter(ev::loop_ref& loop_, char const *address_);
 
-public:
+public:	
 	void addPattern(std::string);
 	void addPattern(regex_t&);  
 	void setup(ev::loop_ref&);
 
+	virtual void setOption(char opt, char* value) = 0;
 	virtual void purge() = 0;
 };
 
