@@ -14,7 +14,6 @@
 
 /*
 	FIXPAUL: --dry-run is working, but -d is not  
-	FIXPAUL: --rdb=0 is not implemented yet	
 */
 
 void usage(const char* binary) {
@@ -91,6 +90,11 @@ int main(int argc, char* argv[]) {
 			case OPT_ZDEL:			
 				for (const auto& adapter: adapters)
 					adapter->setOption(OPT_ZDEL, optarg);
+				break;
+
+			case OPT_RDB:			
+				for (const auto& adapter: adapters)
+					adapter->setOption(OPT_RDB, optarg);
 				break;
 
 			case 'v':

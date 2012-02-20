@@ -53,6 +53,10 @@ void RedisPurger::setOption(char opt, char* value){
 			this->redisKeyMode = REDIS_KEYMODE_ZDEL;
 			this->redisKeyString = value;
 			break;
+
+		case OPT_RDB:
+			redisAsyncCommand(this->redis, NULL, NULL, "SELECT %s", value, strlen(value));
+			break;
 	}
 }
 
