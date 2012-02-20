@@ -29,19 +29,28 @@ void RedisPurger::purgeWithoutRegex() {
 		if (!silent)
 			printf("delete key: %s\n", pattern.c_str());				
 
-    if (!dry_run)
-		  purgeKey(pattern);
+		if (!dry_run)
+			purgeKey(pattern);
 	}
 }
 
-void RedisPurger::purgeWithRegex() {
-	/* FIXPAUL: implement purgeWithRegex */
-	printf("regex purge not yet implemented \n");
+void RedisPurger::purgeWithRegex() {	
+	printf("getting list of keys from redis %s\n", this->address);
+	/* FIXPAUL: implement hdel/zdel/sdel */
+	redisAsyncCommand(this->redis, NULL, NULL, "KEYS");
+}
+
+void RedisPurger::purgeMatchingKeys(std::vector<std::string> keys) {
+
 }
 
 void RedisPurger::purgeKey(std::string key) {
 	/* FIXPAUL: implement hdel/zdel/sdel */
 	redisAsyncCommand(this->redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
+}
+
+void RedisPurger::onKeydata(const redisAsyncContext* redis, int status) {
+
 }
 
 void RedisPurger::onConnect(const redisAsyncContext* redis, int status) {

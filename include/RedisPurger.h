@@ -18,9 +18,11 @@ public:
 	void purgeWithoutRegex();
 	void purgeWithRegex();	
 	void purgeKey(std::string key);
+	void purgeMatchingKeys(std::vector<std::string> keys);
 
 	static void onConnect(const redisAsyncContext* redis, int status);
 	static void onDisconnect(const redisAsyncContext* redis, int status);
+	static void onKeydata(const redisAsyncContext* redis, int status);
 };
 
 #endif
