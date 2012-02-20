@@ -14,6 +14,7 @@
 
 /*
 	FIXPAUL: --dry-run is working, but -d is not  
+	FIXPAUL: we pass ev to the purgers, but actually run another ev_loop(EV_DEFAULT_ 0);
 */
 
 void usage(const char* binary) {
@@ -136,7 +137,7 @@ int main(int argc, char* argv[]) {
 		adapter->purge();
 	}
 	
-	/* ev.run(); */
+	ev_loop(EV_DEFAULT_ 0);
 
 	return 0;
 }
