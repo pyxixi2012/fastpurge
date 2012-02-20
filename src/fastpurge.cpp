@@ -13,8 +13,7 @@
 #include "RedisPurger.h"
 
 /*
-  FIXPAUL: --dry-run is working, but -d is not
-  FIXPAUL: put options in to "bitfields-char" and pass to purgers (dry-run, regex, etc)  
+  FIXPAUL: --dry-run is working, but -d is not  
 */
 
 void usage(const char* binary) {
@@ -132,6 +131,11 @@ int main(int argc, char* argv[]) {
     }
   }
 
+  /* yay! :) */
+  for (const auto& adapter: adapters) {
+    adapter->purge();
+  }
+  
   /* ev.run(); */
 
   return 0;
