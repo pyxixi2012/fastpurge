@@ -14,18 +14,18 @@
 
 class BaseAdapter {
 protected:
-  ev::loop_ref& loop;
-  char const *address;
-  std::vector<std::string> patterns;
+	ev::loop_ref& loop;
+	char const *address;
+	std::vector<std::string> patterns;
 
-  BaseAdapter(ev::loop_ref& loop_, char const *address_);
+	BaseAdapter(ev::loop_ref& loop_, char const *address_);
 
 public:
-  void addPattern(std::string);
-  void addPattern(regex_t&);  
-  void setup(ev::loop_ref&);
+	void addPattern(std::string);
+	void addPattern(regex_t&);  
+	void setup(ev::loop_ref&);
 
-  virtual void purge() = 0;
+	virtual void purge() = 0;
 };
 
 #endif
