@@ -37,11 +37,11 @@ void RedisPurger::purgeWithoutRegex() {
 void RedisPurger::purgeWithRegex() {	
 	printf("getting list of keys from redis %s\n", this->address);
 	/* FIXPAUL: implement hdel/zdel/sdel */
-	redisAsyncCommand(this->redis, NULL, NULL, "KEYS");
+  redisAsyncCommand(this->redis, (void (*)(redisAsyncContext*, void*, void*))&RedisPurger::onKeydata, this, "KEYS");
 }
 
 void RedisPurger::purgeMatchingKeys(std::vector<std::string> keys) {
-
+  printf("BAAAAM!\n");
 }
 
 void RedisPurger::purgeKey(std::string key) {
@@ -49,8 +49,11 @@ void RedisPurger::purgeKey(std::string key) {
 	redisAsyncCommand(this->redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
 }
 
-void RedisPurger::onKeydata(const redisAsyncContext* redis, int status) {
-
+void RedisPurger::onKeydata(redisAsyncContext *redis, void *response, void *privdata) {
+	RedisPurger *self = reinterpret_cast<RedisPurger *>(privdata);
+	std::vector<std::string> keys;
+  self->purgeMatchingKeys(keys);
+  printf("response, yay\n");
 }
 
 void RedisPurger::onConnect(const redisAsyncContext* redis, int status) {

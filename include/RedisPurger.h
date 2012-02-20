@@ -22,7 +22,7 @@ public:
 
 	static void onConnect(const redisAsyncContext* redis, int status);
 	static void onDisconnect(const redisAsyncContext* redis, int status);
-	static void onKeydata(const redisAsyncContext* redis, int status);
+	static void onKeydata(redisAsyncContext *redis, void *response, void *privdata);
 };
 
 #endif
