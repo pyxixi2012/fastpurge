@@ -20,7 +20,7 @@ public:
 	void purgeKey(std::string key);
 	void purgeMatchingKeys(void* keys);
 
-    static void onKeydata(redisAsyncContext *redis, void *response, void *privdata);
+	static void onKeydata(redisAsyncContext *redis, void *response, void *privdata);
 	static void onConnect(const redisAsyncContext* redis, int status);
 	static void onDisconnect(const redisAsyncContext* redis, int status);	
 };

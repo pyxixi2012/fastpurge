@@ -43,7 +43,17 @@ void RedisPurger::purgeWithRegex() {
 void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
 	redisReply *keys = (redisReply*)keys_ptr;
 	for (unsigned int i = 0; i < keys->elements; i++){ 
-		printf("KEY: %s\n", keys->element[i]->str);
+		for(auto& pattern: this->regex_patterns){
+			int match = !regexec(&pattern, keys->element[i]->str, 0, NULL, 0);
+
+			printf("KEY: %s - %i\n", keys->element[i]->str, match);
+
+			if(match && !silent)
+				printf("delete key: %s\n", keys->element[i]->str);	
+			
+			if(match && !dry_run)
+				purgeKey(keys->element[i]->str);		
+		}		
 	}
 }
 
