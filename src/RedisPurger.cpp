@@ -16,17 +16,26 @@ void RedisPurger::purge() {
 		printf("can't connect to redis %s - %s\n", this->address, c->errstr);
 		exit(1);
 	}
+
 	if (!use_regex) {
 			
 		for(auto& pattern: this->string_patterns){
 			if (!silent)
-			  printf("delete key: %s\n", pattern.c_str());				
+				printf("delete key: %s\n", pattern.c_str());				
 
-			redisAsyncCommand(c, NULL, NULL, "DEL %s",  pattern.c_str(), pattern.length()); 
+			purgeKey(c, pattern);
 		}
 
 	} else {
+
 		/* we need to get a list of keys from redis first */
 		printf("get redis keys\n");
+
 	}
+
+}
+
+void RedisPurger::purgeKey(redisAsyncContext *redis, std::string key) {
+	/* FIXPAUL: implement hdel/zdel/sdel */
+	redisAsyncCommand(redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
 }
