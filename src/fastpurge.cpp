@@ -113,13 +113,12 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  for(std::vector<int>::size_type j = 0; j != patterns.size(); j++) {
-
+  for (const auto& pattern: patterns) {
     regex_t xp_pattern;
 
     if (use_regex) {
-      if(regcomp(&xp_pattern, patterns[j].c_str(), REG_EXTENDED) != 0){
-        printf("invalid regex: %s\n", patterns[j].c_str());
+      if(regcomp(&xp_pattern, pattern.c_str(), REG_EXTENDED) != 0){
+        printf("invalid regex: %s\n", pattern.c_str());
         exit(1);
       }
     }
@@ -128,7 +127,7 @@ int main(int argc, char* argv[]) {
       if (use_regex){
         adapters[i]->addPattern(xp_pattern);
       } else {
-        adapters[i]->addPattern(patterns[j]);
+        adapters[i]->addPattern(pattern);
       }
     }
   }
