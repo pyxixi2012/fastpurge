@@ -16,10 +16,14 @@ void RedisPurger::purge() {
 		exit(1);
 	}
 	if (!use_regex) {
-		printf("simple delete\n");	
+			
 		for(auto& pattern: this->string_patterns){
-			printf("delete key: %s\n", pattern.c_str());	
+			if (!silent)
+			  printf("delete key: %s\n", pattern.c_str());				
+
+			redisAsyncCommand(c, NULL, NULL, "DEL %s",  pattern.c_str(), pattern.length()); 
 		}
+
 	} else {
 		/* we need to get a list of keys from redis first */
 		printf("get redis keys\n");
