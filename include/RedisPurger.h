@@ -1,6 +1,9 @@
 #ifndef fastpurge_RedisPurger_h
 #define fastpurge_RedisPurger_h
 
+#define FNORDCAST1 (void (*)(const redisAsyncContext*, int))
+#define FNORDCAST2 (void (*)(redisAsyncContext*, void*, void*))
+
 #include <signal.h>
 #include <hiredis/hiredis.h>
 #include <hiredis/async.h>

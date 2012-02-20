@@ -7,8 +7,8 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 	redisLibevAttach(this->loop, this->redis);
 
 	/* FIXPAUL: this is ugly */
-	redisAsyncSetConnectCallback(this->redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onConnect);    
-	redisAsyncSetDisconnectCallback(this->redis, (void (*)(const redisAsyncContext*, int))&RedisPurger::onDisconnect);    
+	redisAsyncSetConnectCallback(this->redis, FNORDCAST1 &RedisPurger::onConnect);    
+	redisAsyncSetDisconnectCallback(this->redis, FNORDCAST1 &RedisPurger::onDisconnect);    
 
 	if (redis->err) {		
 		printf("ERROR: %s\n", this->redis->errstr);	
@@ -37,7 +37,7 @@ void RedisPurger::purgeWithoutRegex() {
 void RedisPurger::purgeWithRegex() {	
 	printf("getting list of keys from redis %s\n", this->address);
 	/* FIXPAUL: implement hdel/zdel/sdel, also this line is ugly... */
-	redisAsyncCommand(this->redis, (void (*)(redisAsyncContext*, void*, void*))&RedisPurger::onKeydata, this, "KEYS *");
+	redisAsyncCommand(this->redis, FNORDCAST2&RedisPurger::onKeydata, this, "KEYS *");
 }
 
 void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
@@ -45,8 +45,6 @@ void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
 	for (unsigned int i = 0; i < keys->elements; i++){ 
 		for(auto& pattern: this->regex_patterns){
 			int match = !regexec(&pattern, keys->element[i]->str, 0, NULL, 0);
-
-			printf("KEY: %s - %i\n", keys->element[i]->str, match);
 
 			if(match && !silent)
 				printf("delete key: %s\n", keys->element[i]->str);	
