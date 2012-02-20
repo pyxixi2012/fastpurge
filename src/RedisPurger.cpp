@@ -8,7 +8,6 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 	this->redis = redisAsyncConnect("127.0.0.1", 6379);			
 	redisLibevAttach(this->loop, this->redis);
 
-	/* FIXPAUL: this is ugly */
 	redisAsyncSetConnectCallback(this->redis, FNORDCAST1 &RedisPurger::onConnect);    
 	redisAsyncSetDisconnectCallback(this->redis, FNORDCAST1 &RedisPurger::onDisconnect);    
 
@@ -16,6 +15,25 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 		printf("ERROR: %s\n", this->redis->errstr);	
 		exit(1);
 	}
+}
+
+void RedisPurger::onKeydata(redisAsyncContext *redis, void* response, void* privdata) {
+	RedisPurger *self = reinterpret_cast<RedisPurger *>(privdata);	
+	self->purgeMatchingKeys(response);  
+}
+
+void RedisPurger::onConnect(const redisAsyncContext* redis, int status) {
+	if (status != REDIS_OK) {
+		printf("ERROR: %s\n", redis->errstr);
+		return;
+	}
+}
+
+void RedisPurger::onDisconnect(const redisAsyncContext* redis, int status) {
+	if (status != REDIS_OK) {
+		printf("ERROR: %s\n", redis->errstr);
+		return;
+	}	
 }
 
 void RedisPurger::setOption(char opt, char* value){
@@ -35,7 +53,6 @@ void RedisPurger::setOption(char opt, char* value){
 			this->redisKeyMode = REDIS_KEYMODE_ZDEL;
 			this->redisKeyString = value;
 			break;
-
 	}
 }
 
@@ -58,9 +75,24 @@ void RedisPurger::purgeWithoutRegex() {
 }
 
 void RedisPurger::purgeWithRegex() {	
-	printf("getting list of keys from redis %s\n", this->address);
-	/* FIXPAUL: implement hdel/zdel/sdel, also this line is ugly... */
-	redisAsyncCommand(this->redis, FNORDCAST2&RedisPurger::onKeydata, this, "KEYS *");
+	char command[1024];
+
+	switch (this->redisKeyMode) {
+		case REDIS_KEYMODE_GLOB:
+			snprintf(command, sizeof(command), "KEYS *");
+			break;
+		case REDIS_KEYMODE_HDEL:
+			snprintf(command, sizeof(command), "HKEYS %s", this->redisKeyString);
+			break;
+		case REDIS_KEYMODE_ZDEL:
+			snprintf(command, sizeof(command), "ZRANGE %s 0 -1", this->redisKeyString);
+			break;
+		case REDIS_KEYMODE_SDEL:
+			snprintf(command, sizeof(command), "SMEMBERS %s", this->redisKeyString);
+			break;		
+	}
+
+	redisAsyncCommand(this->redis, FNORDCAST2&RedisPurger::onKeydata, this, command);
 }
 
 void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
@@ -79,37 +111,23 @@ void RedisPurger::purgeMatchingKeys(void* keys_ptr) {
 }
 
 void RedisPurger::purgeKey(std::string key) {
+	char command[1024];
+
 	switch (this->redisKeyMode) {
 		case REDIS_KEYMODE_GLOB:
-			printf("glob delete\n");
+			snprintf(command, sizeof(command), "DEL %s", key.c_str());
 			break;
 		case REDIS_KEYMODE_HDEL:
-			printf("hdel delete\n");
+			snprintf(command, sizeof(command), "HDEL %s %s", this->redisKeyString, key.c_str());
 			break;
+		case REDIS_KEYMODE_ZDEL:
+			snprintf(command, sizeof(command), "ZREM %s %s", this->redisKeyString, key.c_str());
+			break;
+		case REDIS_KEYMODE_SDEL:
+			snprintf(command, sizeof(command), "SREM %s %s", this->redisKeyString, key.c_str());
+			break;		
 	}
-	/* FIXPAUL: implement hdel/zdel/sdel */
-	redisAsyncCommand(this->redis, NULL, NULL, "DEL %s",  key.c_str(), key.length()); 
+
+	redisAsyncCommand(this->redis, FNORDCAST2&RedisPurger::onKeydata, this, command);
 }
 
-void RedisPurger::onKeydata(redisAsyncContext *redis, void* response, void* privdata) {
-	RedisPurger *self = reinterpret_cast<RedisPurger *>(privdata);	
-	self->purgeMatchingKeys(response);  
-}
-
-void RedisPurger::onConnect(const redisAsyncContext* redis, int status) {
-	if (status != REDIS_OK) {
-		printf("ERROR: %s\n", redis->errstr);
-		return;
-	}
-	/* FIXPAUL: print connection successful with server addr */
-	printf("Connected...\n");
-}
-
-void RedisPurger::onDisconnect(const redisAsyncContext* redis, int status) {
-	if (status != REDIS_OK) {
-		printf("ERROR: %s\n", redis->errstr);
-		return;
-	}	
-	/* FIXPAUL: print connection failed with server addr */
-	printf("Disconnected...\n");
-}

@@ -10,6 +10,7 @@
 #define REDIS_KEYMODE_ZDEL 3
 
 #include <signal.h>
+#include <string.h>
 #include <hiredis/hiredis.h>
 #include <hiredis/async.h>
 #include <hiredis/adapters/libev.h>
