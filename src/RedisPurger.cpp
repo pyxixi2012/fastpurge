@@ -17,8 +17,8 @@ void RedisPurger::purge() {
 	}
 	if (!use_regex) {
 		printf("simple delete\n");	
-		for(auto& pattern: this->patterns){
-		  printf("delete key: %s\n", pattern.c_str());	
+		for(auto& pattern: this->string_patterns){
+			printf("delete key: %s\n", pattern.c_str());	
 		}
 	} else {
 		/* we need to get a list of keys from redis first */

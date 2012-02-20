@@ -16,7 +16,8 @@ class BaseAdapter {
 protected:
 	ev::loop_ref& loop;
 	char const *address;
-	std::vector<std::string> patterns;
+	std::vector<std::string> string_patterns;
+	std::vector<regex_t> regex_patterns;
 
 	BaseAdapter(ev::loop_ref& loop_, char const *address_);
 
@@ -29,3 +30,4 @@ public:
 };
 
 #endif
+
