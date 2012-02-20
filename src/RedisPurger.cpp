@@ -6,6 +6,22 @@ RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapte
 }
 
 void RedisPurger::purge() {
-	printf("let's go!");
-	/* Do something */
+	printf("let's go!\n");
+
+	/* FIXPAUL: use ip port from this->address */
+	redisAsyncContext *c = redisAsyncConnect("127.0.0.1", 6379);
+
+	if (c->err) {
+		printf("can't connect to redis %s - %s\n", this->address, c->errstr);
+		exit(1);
+	}
+
+
+
+	if (!use_regex) {
+	
+	} else {
+		/* we need to get a list of keys from redis first */
+		printf("get redis keys\n");
+	}
 }

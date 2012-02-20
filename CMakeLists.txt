@@ -45,10 +45,10 @@ if(WITH_PCRE)
 endif(WITH_PCRE)
 
 # require ev library
-find_package(EV)
-include_directories(${EV_INCLUDE_DIR})
-link_directories(${EV_LIBRARY_DIR})
-add_definitions(${EV_CPPFLAGS})
+link_libraries("ev")
+
+# require hiredis
+link_libraries("hiredis")
 
 # {{{ path prefixes
 # ---------------------------------------------------------------------------
