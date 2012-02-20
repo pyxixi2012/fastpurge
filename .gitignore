@@ -6,6 +6,7 @@ cmake_install.cmake
 CMakeFiles
 CMakeCache.txt
 Makefile
+build.sh
 
 # Binary
 fastpurge

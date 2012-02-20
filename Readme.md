@@ -57,6 +57,8 @@ Redis options:
 Installation
 ------------
 
+requires gcc >= 4.6
+
 ```
 git clone git@github.com:paulasmuth/fastpurge.git
 ./autogen.sh && make
@@ -64,6 +66,7 @@ sudo make install
 ```
 
 Examples
+
 --------
 
 delete all redis keys matching one of the two regexes
