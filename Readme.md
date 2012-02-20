@@ -59,7 +59,8 @@ Installation
 
 ```
 git clone git@github.com:paulasmuth/fastpurge.git
-make install
+./autogen.sh && make
+sudo make install
 ```
 
 Examples
