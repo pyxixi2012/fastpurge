@@ -4,8 +4,13 @@
 RedisPurger::RedisPurger(ev::loop_ref& loop_, char const *address_) : BaseAdapter(loop_, address_) {
 	this->redisKeyMode = REDIS_KEYMODE_GLOB;
 
-	/* FIXPAUL: use ip port from this->address */
-	this->redis = redisAsyncConnect("127.0.0.1", 6379);			
+	ip_addr* addr = parseAddress(address_);
+	
+	if (addr->port == 0){
+		addr->port = REDIS_DEFAULT_PORT;
+	}
+
+	this->redis = redisAsyncConnect(addr->host, addr->port);
 	redisLibevAttach(this->loop, this->redis);
 
 	redisAsyncSetConnectCallback(this->redis, FNORDCAST1 &RedisPurger::onConnect);    

@@ -14,6 +14,8 @@
 
 /*
 	FIXPAUL: --dry-run is working, but -d is not  
+	FIXPAUL: Y U NO TERMINATE?
+	FIXPAUL: segfault on connection refused
 */
 
 void usage(const char* binary) {
@@ -70,7 +72,7 @@ int main(int argc, char* argv[]) {
 				break;
 
 			case ADAPTER_MEMCACHED:
-				printf("ERROR: memcached adapter is not yet implemented\n");
+				printf("ERROR: ADAPTER_MEMCACHED adapter is not yet implemented\n");
 				return 1;
 
 			case ADAPTER_VARNISH:

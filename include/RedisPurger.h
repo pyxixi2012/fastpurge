@@ -9,6 +9,8 @@
 #define REDIS_KEYMODE_SDEL 2
 #define REDIS_KEYMODE_ZDEL 3
 
+#define REDIS_DEFAULT_PORT 6379
+
 #include <signal.h>
 #include <string.h>
 #include <hiredis/hiredis.h>

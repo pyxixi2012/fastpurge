@@ -2,9 +2,12 @@
 #define fastpurge_BaseAdapter_h
 
 #include <string>
+#include <string.h>
 #include <vector>
 #include <regex.h>
 #include <ev++.h>
+
+#include "ip_addr.h"
 
 #define ADAPTER_REDIS 'R'
 #define ADAPTER_MEMCACHED 'M'
@@ -20,6 +23,7 @@ protected:
 	std::vector<regex_t> regex_patterns;
 
 	BaseAdapter(ev::loop_ref& loop_, char const *address_);
+	ip_addr* parseAddress(const char* address);
 
 public:	
 	void addPattern(std::string);
