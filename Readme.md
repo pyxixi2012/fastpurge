@@ -8,12 +8,12 @@ Usage
 -----
 
 ```
-fastpurge [-xnvhs] [--redis|--varnish SERVER]... [OPTIONS]... [PATTERN]...
+fastpurge [-xdvhs] [--redis|--varnish SERVER]... [OPTIONS]... [PATTERN]...
   
   -x, --regex
     use regexes instead of plain keys       
 
-  -n, --dry-run
+  -d, --dry-run
     print the matching keys, but do not delete    
 
   -s, --silent
@@ -89,7 +89,7 @@ fastpurge --redis=10.0.0.1:6379 --redis=10.0.0.2:6379 key1 key2 key3
 License
 -------
 
-Copyright (c) 2011 Paul Asmuth and Mikael Voss
+Copyright (c) 2011 Paul Asmuth
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

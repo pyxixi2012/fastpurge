@@ -8,8 +8,7 @@
 #define VERSION_STRING "fastpurge %i.%i.%i\n\n"
 
 #define LICENSE_STRING "Copyright © 2012\n" \
-  "  Paul Asmuth <paul@paulasmuth.com>  \n" \
-  "  Mikael Voss <mikael@illdefined.org>\n"
+  "  Paul Asmuth <paul@paulasmuth.com>    "
 
 #define USAGE_STRING "usage:" \
   " %s [-xnvhs] [--redis|--varnish| SERVER]... [OPTIONS]... [PATTERN]...            \n" \
