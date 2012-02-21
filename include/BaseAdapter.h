@@ -10,7 +10,6 @@
 #include "ip_addr.h"
 
 #define ADAPTER_REDIS 'R'
-#define ADAPTER_MEMCACHED 'M'
 #define ADAPTER_VARNISH 'V'
 
 #define XP_ADDRESS "^([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})(:([0-9]{1,6}))?$"

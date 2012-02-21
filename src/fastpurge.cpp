@@ -46,7 +46,6 @@ int main(int argc, char* argv[]) {
 		int option_index = 0;
 		static struct option long_options[] = { 
 			{ "redis",     required_argument, nullptr,    ADAPTER_REDIS },
-			{ "memcached", required_argument, nullptr,    ADAPTER_MEMCACHED },
 			{ "varnish",   required_argument, nullptr,    ADAPTER_VARNISH },
 			{ "hdel",      required_argument, nullptr,    OPT_HDEL },
 			{ "zdel",      required_argument, nullptr,    OPT_ZDEL },
@@ -70,10 +69,6 @@ int main(int argc, char* argv[]) {
 			case ADAPTER_REDIS:
 				adapters.push_back(new RedisPurger(ev, optarg));
 				break;
-
-			case ADAPTER_MEMCACHED:
-				printf("ERROR: ADAPTER_MEMCACHED adapter is not yet implemented\n");
-				return 1;
 
 			case ADAPTER_VARNISH:
 				printf("ERROR: varnish adapter is not yet implemented\n");

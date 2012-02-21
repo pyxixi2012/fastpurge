@@ -12,7 +12,7 @@
   "  Mikael Voss <mikael@illdefined.org>\n"
 
 #define USAGE_STRING "usage:" \
-  " %s [-xnvhs] [--redis|--varnish|--memcached SERVER]... [OPTIONS]... [PATTERN]... \n" \
+  " %s [-xnvhs] [--redis|--varnish| SERVER]... [OPTIONS]... [PATTERN]...            \n" \
   "                                                                                 \n" \
   "  -x, --regex                                                                    \n" \
   "    use regexes instead of plain keys                                            \n" \
@@ -34,9 +34,6 @@
   "                                                                                 \n" \
   "  --redis=HOST(:PORT)                                                            \n" \
   "    purge from redis HOST (multiple allowed)                                     \n" \
-  "                                                                                 \n" \
-  "  --memcached=HOST(:PORT)                                                        \n" \
-  "    purge from memcached HOST (multiple allowed)                                 \n" \
   "                                                                                 \n" \
   "  --varnish=HOST(:PORT)                                                          \n" \
   "    purge from varnish HOST (multiple allowed)                                   \n" \

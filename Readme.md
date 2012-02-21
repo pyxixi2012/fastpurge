@@ -1,14 +1,14 @@
 fastpurge
 =========
 
-easily purge all keys matching one or more regexes from one or more redis, varnish or memcached instances
+easily purge all keys matching one or more regexes from one or more redis or varnish instances
 
 
 Usage
 -----
 
 ```
-fastpurge [-xnvhs] [--redis|--varnish|--memcached SERVER]... [OPTIONS]... [PATTERN]...
+fastpurge [-xnvhs] [--redis|--varnish SERVER]... [OPTIONS]... [PATTERN]...
   
   -x, --regex
     use regexes instead of plain keys       
@@ -30,9 +30,6 @@ Adapters:
 
   --redis=HOST(:PORT) 
     purge from redis HOST (multiple allowed)
-
-  --memcached=HOST(:PORT) 
-    purge from memcached HOST (multiple allowed)
 
   --varnish=HOST(:PORT) 
     purge from varnish HOST (multiple allowed)

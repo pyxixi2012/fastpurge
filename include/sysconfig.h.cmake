@@ -7,7 +7,6 @@
 #cmakedefine HAVE_PCRE_H
 
 // this is how you'd check for those
-//#cmakedefine HAVE_LIBMEMCACHED_H
 //#cmakedefine HAVE_HIREDIS_H
 
 #endif
