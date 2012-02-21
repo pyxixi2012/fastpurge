@@ -6,6 +6,6 @@ add_definitions(
 	-DPACKAGE_HOMEPAGE_URL="${PACKAGE_HOMEPAGE_URL}"
 	-DVERSION="${PACKAGE_VERSION}")
 
-add_executable(fastpurge fastpurge.cpp BaseAdapter.cpp RedisPurger.cpp)
+add_executable(fastpurge fastpurge.cpp BaseAdapter.cpp RedisPurger.cpp VarnishPurger.cpp)
 target_link_libraries(fastpurge ${EV_LIBRARIES})
 install(TARGETS fastpurge RUNTIME DESTINATION bin)

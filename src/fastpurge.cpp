@@ -11,6 +11,7 @@
 #include "fastpurge.h"
 #include "BaseAdapter.h"
 #include "RedisPurger.h"
+#include "VarnishPurger.h"
 
 /*
 	FIXPAUL: --dry-run is working, but -d is not  
@@ -71,8 +72,8 @@ int main(int argc, char* argv[]) {
 				break;
 
 			case ADAPTER_VARNISH:
-				printf("ERROR: varnish adapter is not yet implemented\n");
-				return 1;
+				adapters.push_back(new VarnishPurger(ev, optarg));
+				break;
 
 			case OPT_HDEL:			
 				for (const auto& adapter: adapters)
