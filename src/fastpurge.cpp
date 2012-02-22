@@ -14,6 +14,7 @@
 #include "VarnishPurger.h"
 
 /*
+	FIXPAUL: TODO: fastpurged (daemonize and listen on redis for patterns)
 	FIXPAUL: --dry-run is working, but -d is not  
 	FIXPAUL: Y U NO TERMINATE?
 	FIXPAUL: segfault on connection refused
