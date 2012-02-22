@@ -15,6 +15,7 @@
 
 /*
 	FIXPAUL: TODO: fastpurged (daemonize and listen on redis for patterns)
+	FIXPAUL: TODO: detect stub patterns like /^fnord$/ and use simple key delete
 	FIXPAUL: --dry-run is working, but -d is not  
 	FIXPAUL: Y U NO TERMINATE?
 	FIXPAUL: segfault on connection refused
